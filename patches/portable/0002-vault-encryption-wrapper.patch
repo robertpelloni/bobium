@@ -1,0 +1,23 @@
+--- a/chrome/browser/profiles/profile_manager.cc
++++ b/chrome/browser/profiles/profile_manager.cc
+@@ -50,6 +50,7 @@
+ #include "chrome/browser/prefs/incognito_mode_prefs.h"
+ #include "chrome/browser/profiles/profile_attributes_entry.h"
+ #include "chrome/browser/profiles/profile_attributes_storage.h"
++#include "crypto/aead.h" // bobium: Vault AES-256 stub
+
+ namespace {
+
+@@ -350,6 +351,13 @@
+     bool is_new_profile) {
+   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
++  // bobium: Portable Vault Mode wrapper concept
++  // If Vault mode is active, the profile directory should be intercepted here.
++  // Data read/written to `path` must be transparently wrapped using AES-256
++  // with a master password derived key before hitting the OS filesystem.
++  // TODO(bobium): Implement Virtual File System (VFS) or encrypted SQLite VFS
++  // shim for leveldb/Preferences.
++
+   bool is_ephemeral =
+       profile->GetPrefs()->GetBoolean(prefs::kForceEphemeralProfiles);

@@ -10,7 +10,7 @@
 ## Short-term Features
 - [x] Draft the initial portable mode detection logic (`chrome_main_delegate.cc` equivalent patch) to redirect the User Data directory.
 - [x] Create `settings/default_preferences.json` enforcing strict privacy defaults (DNT on, third-party cookies blocked, no sync).
-- [ ] Prepare the `AES-256` wrapper for the portable Vault mode workspace.
+- [x] Prepare the `AES-256` wrapper for the portable Vault mode workspace.
 
 ## Bug Fixes & Refactoring
 - [x] Solidify all overarching documentation and ensure consistent versioning references in `VERSION.md`.
