@@ -1,0 +1,29 @@
+{
+  "browser": {
+    "has_seen_welcome_page": true,
+    "check_default_browser": false
+  },
+  "privacy": {
+    "donottrack": true,
+    "network_prediction_enabled": false
+  },
+  "profile": {
+    "block_third_party_cookies": true,
+    "cookie_controls_mode": 1
+  },
+  "search": {
+    "suggest_enabled": false
+  },
+  "sync": {
+    "managed": true,
+    "enabled": false
+  },
+  "signin": {
+    "allowed": false
+  },
+  "safebrowsing": {
+    "enabled": false,
+    "scout_reporting_enabled": false,
+    "enhanced": false
+  }
+}

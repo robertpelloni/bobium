@@ -21,3 +21,7 @@ Bobium is "Chromium, but less evil." To move from "Less Evil" to "Universal Comp
 ## 5. Portability & Distribution
 *   **Portable "Vault" Mode:** Enhance portable mode with **AES-256 Workspace Encryption**. The entire Bobium folder (including history, passwords, and extensions) could be encrypted with a master password, making it the world's most secure "Browser on a USB Stick."
 *   **Automated "Patch Sync":** Develop a background agent that autonomously monitors `ungoogled-chromium` and `LibreWolf` repos, **Auto-Backporting privacy patches** into Bobium using Jules-Autopilot sessions, ensuring the browser is always at the cutting edge of privacy.
+
+## 6. Aggressive Overhauls & Omni-Workspace Expansions
+*   **Bob-Native Cloud OS Integration:** Bobium should not just be a browser; it should be the runtime shell for `aios` and `borg` when executed locally. The new tab page could natively render the AI OS interface directly from the Omni-Workspace.
+*   **Bypass Chromium Build Monolith:** Investigate whether replacing Ninja/GN with a distributed, cache-heavy build matrix (like remote execution via Bobcoin incentivized nodes) could drop compile times from 8 hours to 10 minutes.

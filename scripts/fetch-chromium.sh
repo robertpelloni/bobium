@@ -36,9 +36,22 @@ else
     git fetch
 fi
 
-# 3. Run hooks to finalize
-echo "Running gclient hooks..."
+# 3. Run hooks to finalize with robust recovery loop
+echo "Running gclient hooks (with auto-retry for network drops)..."
 cd "$CHROMIUM_DIR/src"
-gclient runhooks
+MAX_RETRIES=3
+RETRY_COUNT=0
+while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+    gclient runhooks && break || {
+        RETRY_COUNT=$((RETRY_COUNT+1))
+        echo "gclient runhooks failed. Retrying ($RETRY_COUNT/$MAX_RETRIES) in 10 seconds..."
+        sleep 10
+    }
+done
+
+if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
+    echo "Error: gclient runhooks failed after maximum retries. Please check network/dependencies."
+    exit 1
+fi
 
 echo "=== Chromium source fetched successfully! ==="

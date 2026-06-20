@@ -1,0 +1,20 @@
+--- a/chrome/app/chrome_main_delegate.cc
++++ b/chrome/app/chrome_main_delegate.cc
+@@ -234,6 +234,18 @@
+   base::FilePath GetDefaultUserDataDir() {
+     base::FilePath user_data_dir;
++
++    // bobium: Portable mode check
++    // If a "portable" file or directory exists adjacent to the executable,
++    // store all User Data locally instead of in AppData/home directories.
++    base::FilePath exe_dir;
++    if (base::PathService::Get(base::DIR_EXE, &exe_dir)) {
++      base::FilePath portable_marker = exe_dir.AppendASCII("portable");
++      if (base::PathExists(portable_marker)) {
++        return exe_dir.AppendASCII("UserData");
++      }
++    }
++
+     chrome::GetDefaultUserDataDirectory(&user_data_dir);
+     return user_data_dir;
+   }
