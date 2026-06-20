@@ -1,10 +1,10 @@
 # TODO.md
 
 ## Immediate Tasks
-- [ ] Initialize missing repository directories (`patches/`, `portable/`, `settings/`, `scripts/`).
-- [ ] Develop `scripts/fetch-chromium.sh` to robustly handle depot_tools setup and `gclient runhooks` for the 30GB repo.
-- [ ] Develop `scripts/apply-patches.sh` to ingest and apply ungoogled-chromium baseline patches.
-- [ ] Develop `scripts/build.sh` for standard `gn gen` and `autoninja` compilation steps.
+- [x] Initialize missing repository directories (`patches/`, `portable/`, `settings/`, `scripts/`).
+- [x] Develop `scripts/fetch-chromium.sh` to robustly handle depot_tools setup and `gclient runhooks` for the 30GB repo.
+- [x] Develop `scripts/apply-patches.sh` to ingest and apply ungoogled-chromium baseline patches.
+- [x] Develop `scripts/build.sh` for standard `gn gen` and `autoninja` compilation steps.
 - [ ] Identify and prepare patch for `chrome/browser/extensions/manifest_v2_experiment.cc` to permanently disable MV2 deprecation.
 
 ## Short-term Features
