@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Mon, 1 Jan 2026 00:00:00 +0000
+Subject: [PATCH] feat: preserve manifest v2 by disabling deprecation flags
+
+This patch intercepts the base feature flags responsible for
+the Manifest V2 deprecation timeline and hardcodes them to false.
+
+---
+ extensions/common/extension_features.cc | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/extensions/common/extension_features.cc b/extensions/common/extension_features.cc
+--- a/extensions/common/extension_features.cc
++++ b/extensions/common/extension_features.cc
+@@ -52,19 +52,19 @@
+ // Controls whether the Manifest V2 deprecation warning is shown.
+ BASE_FEATURE(kMV2DeprecationWarning,
+              "ExtensionManifestV2DeprecationWarning",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT); // bobium: disable MV2 warning
+
+ // Controls whether Manifest V2 extensions are disabled.
+ BASE_FEATURE(kMV2DeprecationDisable,
+              "ExtensionManifestV2DeprecationDisable",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT); // bobium: never disable MV2
+
+ // Controls whether the Manifest V2 deprecation unsupported warning is shown.
+ BASE_FEATURE(kMV2DeprecationUnsupportedWarning,
+              "ExtensionManifestV2DeprecationUnsupportedWarning",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT); // bobium: disable unsupported warning
+
+ }  // namespace extensions_features
+--
+2.40.1

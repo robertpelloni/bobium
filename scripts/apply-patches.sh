@@ -9,12 +9,30 @@ echo "Applying bobium patches..."
 # Ensure we're in the right directory
 if [ ! -d "$PATCH_DIR" ]; then
     echo "Error: patches directory not found!"
-    # Handle error without exit 1 for sandbox compatibility
 else
     # Apply portable mode patch
     if [ -f "$PATCH_DIR/portable/0001-portable-vault-mode.patch" ]; then
         echo "Applying portable vault mode patch..."
-        # In a real environment: cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/portable/0001-portable-vault-mode.patch
+        # Uncommented: apply the patch if Chromium dir exists
+        if [ -d "$CHROMIUM_DIR" ]; then
+            cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/portable/0001-portable-vault-mode.patch
+            cd ..
+        else
+            echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
+        fi
     fi
+
+    # Apply adblock/MV2 patches
+    if [ -f "$PATCH_DIR/adblock/0001-preserve-manifest-v2.patch" ]; then
+        echo "Applying preserve manifest v2 patch..."
+        # Uncommented: apply the patch if Chromium dir exists
+        if [ -d "$CHROMIUM_DIR" ]; then
+            cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/adblock/0001-preserve-manifest-v2.patch
+            cd ..
+        else
+            echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
+        fi
+    fi
+
     echo "Patches applied successfully."
 fi
