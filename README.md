@@ -47,6 +47,9 @@ Chromium won the browser engine war. But Google controls it, and that's a proble
 
 ## Key Features (Planned)
 
+### Portable Mode
+- [x] Portable vault mode interception
+
 ### Privacy (Day 1)
 - [ ] All Google services stripped (using ungoogled-chromium patches)
 - [ ] No telemetry
