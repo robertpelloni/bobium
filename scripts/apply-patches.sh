@@ -13,7 +13,6 @@ else
     # Apply portable mode patch
     if [ -f "$PATCH_DIR/portable/0001-portable-vault-mode.patch" ]; then
         echo "Applying portable vault mode patch..."
-        # Uncommented: apply the patch if Chromium dir exists
         if [ -d "$CHROMIUM_DIR" ]; then
             cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/portable/0001-portable-vault-mode.patch
             cd ..
@@ -25,9 +24,19 @@ else
     # Apply adblock/MV2 patches
     if [ -f "$PATCH_DIR/adblock/0001-preserve-manifest-v2.patch" ]; then
         echo "Applying preserve manifest v2 patch..."
-        # Uncommented: apply the patch if Chromium dir exists
         if [ -d "$CHROMIUM_DIR" ]; then
             cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/adblock/0001-preserve-manifest-v2.patch
+            cd ..
+        else
+            echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
+        fi
+    fi
+
+    # Apply privacy patches
+    if [ -f "$PATCH_DIR/privacy/0001-default-privacy-settings.patch" ]; then
+        echo "Applying default privacy settings patch..."
+        if [ -d "$CHROMIUM_DIR" ]; then
+            cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/privacy/0001-default-privacy-settings.patch
             cd ..
         else
             echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
