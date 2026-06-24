@@ -1,0 +1,39 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Mon, 1 Jan 2026 00:00:00 +0000
+Subject: [PATCH] privacy: global domain substitution for google services
+
+Replaces hardcoded Google service domains with non-routable equivalents
+to prevent accidental telemetry or tracking pings.
+
+---
+ net/base/url_util.cc | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/net/base/url_util.cc b/net/base/url_util.cc
+--- a/net/base/url_util.cc
++++ b/net/base/url_util.cc
+@@ -50,6 +50,21 @@
+
+ namespace net {
+
++// bobium: Global Domain Substitution
++// Re-routes Google API and telemetry endpoints to localhost.
++GURL ApplyBobiumDomainSubstitutions(const GURL& url) {
++  std::string host = url.host();
++  if (host.find("google-analytics.com") != std::string::npos ||
++      host.find("clients2.google.com") != std::string::npos ||
++      host.find("clients4.google.com") != std::string::npos ||
++      host.find("update.googleapis.com") != std::string::npos ||
++      host.find("safebrowsing.googleapis.com") != std::string::npos) {
++    GURL::Replacements replacements;
++    replacements.SetHostStr("127.0.0.1");
++    return url.ReplaceComponents(replacements);
++  }
++  return url;
++}
++
+ // ... existing url parsing logic ...
+
+--
+2.40.1

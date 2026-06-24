@@ -1,8 +1,11 @@
 # Project Memory: bobium
 
 ## Current State
-Phase 1: Foundation & Core Patches.
-Successfully drafted the first core feature patch: Portable Vault Mode (`patches/portable/0001-portable-vault-mode.patch`).
+Phase 1 & 2 overlap: Foundation & Privacy Enforcement.
+- Drafted Portable Vault Mode.
+- Drafted MV2 preservation.
+- Drafted Privacy defaults (DNT, 3P cookies).
+- Drafted ungoogled-chromium style patches (Safe Browsing disabling, domain substitution).
 
 ## Active Focus
-Developing patches that enforce the core vision (No Google, MV2 preservation, portability) *before* triggering the massive 30GB Chromium download, to ensure the patch ecosystem is ready.
+Continuing to build out the required patch infrastructure to fully decouple the engine from Google before attempting the massive source fetch.

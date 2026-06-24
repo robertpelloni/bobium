@@ -43,14 +43,19 @@ else
     fi
 
     # Apply ungoogled telemetry patches
-    if [ -f "$PATCH_DIR/ungoogled/0001-placeholder-telemetry-removal.patch" ]; then
+    if [ -d "$PATCH_DIR/ungoogled" ]; then
         echo "Applying ungoogled telemetry removal patches..."
-        if [ -d "$CHROMIUM_DIR" ]; then
-            cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/ungoogled/0001-placeholder-telemetry-removal.patch
-            cd ..
-        else
-            echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
-        fi
+        for patch in "$PATCH_DIR/ungoogled"/*.patch; do
+            if [ -f "$patch" ]; then
+                echo "Applying $patch..."
+                if [ -d "$CHROMIUM_DIR" ]; then
+                    cd "$CHROMIUM_DIR" && git apply "../$patch"
+                    cd ..
+                else
+                    echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
+                fi
+            fi
+        done
     fi
 
     echo "Patches applied successfully."
