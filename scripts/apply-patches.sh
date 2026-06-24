@@ -6,7 +6,6 @@ CHROMIUM_DIR="chromium"
 
 echo "Applying bobium patches..."
 
-# Ensure we're in the right directory
 if [ ! -d "$PATCH_DIR" ]; then
     echo "Error: patches directory not found!"
 else
@@ -37,6 +36,17 @@ else
         echo "Applying default privacy settings patch..."
         if [ -d "$CHROMIUM_DIR" ]; then
             cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/privacy/0001-default-privacy-settings.patch
+            cd ..
+        else
+            echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
+        fi
+    fi
+
+    # Apply ungoogled telemetry patches
+    if [ -f "$PATCH_DIR/ungoogled/0001-placeholder-telemetry-removal.patch" ]; then
+        echo "Applying ungoogled telemetry removal patches..."
+        if [ -d "$CHROMIUM_DIR" ]; then
+            cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/ungoogled/0001-placeholder-telemetry-removal.patch
             cd ..
         else
             echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
