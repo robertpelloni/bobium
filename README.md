@@ -52,9 +52,9 @@ Chromium won the browser engine war. But Google controls it, and that's a proble
 
 ### Privacy (Day 1)
 - [ ] All Google services stripped (using ungoogled-chromium patches)
-- [ ] No telemetry
-- [ ] No safe browsing phone-home (local lists only)
-- [ ] No Google account integration
+- [x] No telemetry
+- [x] No safe browsing phone-home (local lists only)
+- [x] No Google account integration
 - [ ] Strict tracking protection
 
 ### Ad Blocking

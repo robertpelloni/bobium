@@ -13,5 +13,5 @@
 - [x] Expand ungoogled-chromium patch set to cover all domain substitutions and safe-browsing removals.
 
 ## UI/UX
-- [ ] Remove Google sign-in prompts from Chromium settings UI.
+- [x] Remove Google sign-in prompts from Chromium settings UI.
 - [ ] Implement initial "bobium" branding assets.
