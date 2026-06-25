@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Mon, 1 Jan 2026 00:00:00 +0000
+Subject: [PATCH] privacy: disable google lens and default search overrides
+
+Strips out the Google Lens integration in the context menus and
+ensures the default search engine fallback does not hardcode to Google.
+
+---
+ chrome/browser/ui/tab_contents/core_tab_helper.cc | 3 +++
+ components/search_engines/template_url_prepopulate_data.cc | 2 +-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/chrome/browser/ui/tab_contents/core_tab_helper.cc b/chrome/browser/ui/tab_contents/core_tab_helper.cc
+--- a/chrome/browser/ui/tab_contents/core_tab_helper.cc
++++ b/chrome/browser/ui/tab_contents/core_tab_helper.cc
+@@ -150,6 +150,9 @@ void CoreTabHelper::SearchWithLens(
+     content::RenderFrameHost* render_frame_host,
+     const GURL& src_url,
+     const gfx::Rect& bounding_rect) {
++  // bobium: Disable Google Lens context menu actions entirely.
++  VLOG(1) << "bobium: Google Lens search blocked.";
++  return;
+   // Original Lens logic...
+ }
+
+diff --git a/components/search_engines/template_url_prepopulate_data.cc b/components/search_engines/template_url_prepopulate_data.cc
+--- a/components/search_engines/template_url_prepopulate_data.cc
++++ b/components/search_engines/template_url_prepopulate_data.cc
+@@ -200,7 +200,7 @@ const PrepopulatedEngine* const engines_default[] = {
+ // bobium: Replace Google with DuckDuckGo as the hardcoded fallback engine
+-    &google,
++    &duckduckgo,
+     &bing,
+     &yahoo,
+ };
+--
+2.40.1

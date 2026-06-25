@@ -45,7 +45,8 @@ else
     # Apply ungoogled telemetry patches
     if [ -d "$PATCH_DIR/ungoogled" ]; then
         echo "Applying ungoogled telemetry removal patches..."
-        for patch in "$PATCH_DIR/ungoogled"/*.patch; do
+        # Sort to ensure they apply in numerical order
+        for patch in $(ls "$PATCH_DIR/ungoogled"/*.patch | sort); do
             if [ -f "$patch" ]; then
                 echo "Applying $patch..."
                 if [ -d "$CHROMIUM_DIR" ]; then
