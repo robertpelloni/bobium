@@ -59,5 +59,16 @@ else
         done
     fi
 
+    # Apply branding patches
+    if [ -f "$PATCH_DIR/branding/0001-bobium-branding.patch" ]; then
+        echo "Applying bobium branding patch..."
+        if [ -d "$CHROMIUM_DIR" ]; then
+            cd "$CHROMIUM_DIR" && git apply ../$PATCH_DIR/branding/0001-bobium-branding.patch
+            cd ..
+        else
+            echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
+        fi
+    fi
+
     echo "Patches applied successfully."
 fi

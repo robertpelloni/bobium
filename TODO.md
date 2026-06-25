@@ -14,4 +14,4 @@
 
 ## UI/UX
 - [x] Remove Google sign-in prompts from Chromium settings UI.
-- [ ] Implement initial "bobium" branding assets.
+- [x] Implement initial "bobium" branding assets.
