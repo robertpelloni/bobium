@@ -51,7 +51,7 @@ Chromium won the browser engine war. But Google controls it, and that's a proble
 - [x] Portable vault mode interception
 
 ### Privacy (Day 1)
-- [ ] All Google services stripped (using ungoogled-chromium patches)
+- [x] All Google services stripped (using ungoogled-chromium patches)
 - [x] No telemetry
 - [x] No safe browsing phone-home (local lists only)
 - [x] No Google account integration

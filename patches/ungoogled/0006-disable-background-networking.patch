@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Mon, 1 Jan 2026 00:00:00 +0000
+Subject: [PATCH] privacy: disable background networking and crash reporting
+
+Disables background networking processes, component updater phone-homes,
+and the Breakpad crash reporting system.
+
+---
+ chrome/browser/background/background_mode_manager.cc | 3 +++
+ components/crash/core/app/crashpad.cc | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/chrome/browser/background/background_mode_manager.cc b/chrome/browser/background/background_mode_manager.cc
+--- a/chrome/browser/background/background_mode_manager.cc
++++ b/chrome/browser/background/background_mode_manager.cc
+@@ -200,6 +200,9 @@ BackgroundModeManager::~BackgroundModeManager() {
+ }
+
+ void BackgroundModeManager::RegisterPrefs(PrefRegistrySimple* registry) {
++  // bobium: Force background mode disabled by default.
++  registry->RegisterBooleanPref(prefs::kBackgroundModeEnabled, false);
++  return;
+   registry->RegisterBooleanPref(prefs::kBackgroundModeEnabled, true);
+ }
+
+diff --git a/components/crash/core/app/crashpad.cc b/components/crash/core/app/crashpad.cc
+--- a/components/crash/core/app/crashpad.cc
++++ b/components/crash/core/app/crashpad.cc
+@@ -100,6 +100,9 @@ void InitializeCrashpadImpl(bool initial_client,
+                             const std::string& process_type,
+                             const std::string& user_data_dir,
+                             const base::FilePath& exe_path) {
++  // bobium: Completely disable Crashpad initialization to prevent phone-home.
++  return;
++
+   static bool initialized = false;
+   DCHECK(!initialized);
+   initialized = true;
+--
+2.40.1

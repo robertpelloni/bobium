@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Mon, 1 Jan 2026 00:00:00 +0000
+Subject: [PATCH] privacy: remove google api keys and client IDs
+
+Removes hardcoded Google API keys, client IDs, and secrets from the
+codebase to prevent accidental or intended authentication with Google
+infrastructure.
+
+---
+ google_apis/google_api_keys.cc | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/google_apis/google_api_keys.cc b/google_apis/google_api_keys.cc
+--- a/google_apis/google_api_keys.cc
++++ b/google_apis/google_api_keys.cc
+@@ -140,11 +140,11 @@ namespace {
+ // If you are adding a new key, update the function GetAPIKey() to handle it.
+
+ // bobium: Removed all default keys for radical privacy.
+-const char kDefaultAPIKey[] = "DUMMY_KEY";
+-const char kDefaultMetricsAPIKey[] = "DUMMY_KEY";
+-const char kDefaultSpeechAPIKey[] = "DUMMY_KEY";
+-const char kDefaultTranslateAPIKey[] = "DUMMY_KEY";
+-const char kDefaultGeolocationAPIKey[] = "DUMMY_KEY";
+-const char kDefaultNetworkLocationAPIKey[] = "DUMMY_KEY";
++const char kDefaultAPIKey[] = "";
++const char kDefaultMetricsAPIKey[] = "";
++const char kDefaultSpeechAPIKey[] = "";
++const char kDefaultTranslateAPIKey[] = "";
++const char kDefaultGeolocationAPIKey[] = "";
++const char kDefaultNetworkLocationAPIKey[] = "";
+
+ }  // namespace
+--
+2.40.1
