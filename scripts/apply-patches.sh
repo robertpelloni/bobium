@@ -70,5 +70,21 @@ else
         fi
     fi
 
+    # Apply performance patches
+    if [ -d "$PATCH_DIR/performance" ]; then
+        echo "Applying performance and hibernation patches..."
+        for patch in $(ls "$PATCH_DIR/performance"/*.patch | sort); do
+            if [ -f "$patch" ]; then
+                echo "Applying $patch..."
+                if [ -d "$CHROMIUM_DIR" ]; then
+                    cd "$CHROMIUM_DIR" && git apply "../$patch"
+                    cd ..
+                else
+                    echo "Warning: $CHROMIUM_DIR directory not found, skipping patch application."
+                fi
+            fi
+        done
+    fi
+
     echo "Patches applied successfully."
 fi
