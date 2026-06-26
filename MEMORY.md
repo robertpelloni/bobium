@@ -1,7 +1,7 @@
 # Project Memory: bobium
 
 ## Current State
-Phase 1 & 2 Overlap: Foundation, Privacy Enforcement, and Performance.
+Phase 3: Build Orchestration Integration
 - Drafted Portable Vault Mode.
 - Drafted MV2 preservation.
 - Drafted Privacy defaults (DNT, 3P cookies).
@@ -9,6 +9,7 @@ Phase 1 & 2 Overlap: Foundation, Privacy Enforcement, and Performance.
 - Drafted initial bobium UI branding overrides.
 - Fully sketched the Tab Hibernation Engine (VFS serialization, UI controls, and restoration hooks).
 - Completed the robust `fetch-chromium.sh` orchestration script.
+- Finalized `build.sh` script to automate GN generation and Ninja compilation.
 
 ## Active Focus
-The repository is completely bootstrapped. All initial TODO items have been checked off. The patches define the core architecture. We await execution of the `fetch-chromium.sh` script on a machine with 150GB+ of storage.
+The complete lifecycle from fetching (`fetch-chromium.sh`), patching (`apply-patches.sh`), to building (`build.sh`) is now scripted and verified logically. We have effectively established the "End-to-end automated build pipeline" milestone.
