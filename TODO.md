@@ -19,4 +19,4 @@
 ## Performance (Phase 2)
 - [x] Draft initial Tab Hibernation Engine interception points.
 - [x] Implement VFS logic for writing serialized DOM state to disk.
-- [ ] Add UI controls for setting memory caps per tab.
+- [x] Add UI controls for setting memory caps per tab.

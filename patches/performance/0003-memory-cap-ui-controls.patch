@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Mon, 1 Jan 2026 00:00:00 +0000
+Subject: [PATCH] performance: add UI controls for memory caps per tab
+
+Exposes the bobium custom tab hibernation settings to the Chromium
+settings UI, allowing users to define strict RAM caps (e.g., 500MB)
+before a tab is aggressively serialized and discarded to disk.
+
+---
+ chrome/browser/ui/webui/settings/performance_settings.cc | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/chrome/browser/ui/webui/settings/performance_settings.cc b/chrome/browser/ui/webui/settings/performance_settings.cc
+--- a/chrome/browser/ui/webui/settings/performance_settings.cc
++++ b/chrome/browser/ui/webui/settings/performance_settings.cc
+@@ -50,6 +50,21 @@ void AddPerformanceStrings(content::WebUIDataSource* html_source) {
+       {"highEfficiencyModeDescription",
+        IDS_SETTINGS_HIGH_EFFICIENCY_MODE_DESCRIPTION},
++
++  // ========================================================================
++  // bobium: Tab Hibernation Engine UI Controls
++  // ========================================================================
++      {"bobiumHibernationTitle",
++       IDS_SETTINGS_BOBIUM_HIBERNATION_TITLE},
++      {"bobiumHibernationDescription",
++       IDS_SETTINGS_BOBIUM_HIBERNATION_DESC},
++      {"bobiumMemoryCapLabel",
++       IDS_SETTINGS_BOBIUM_MEMORY_CAP_LABEL},
++  // ========================================================================
++
+       // ... existing strings ...
+ }
+
+--
+2.40.1
