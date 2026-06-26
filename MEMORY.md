@@ -1,15 +1,14 @@
 # Project Memory: bobium
 
 ## Current State
-Phase 2: Performance (Hibernation Engine) Execution is nearly complete.
+Phase 1 & 2 Overlap: Foundation, Privacy Enforcement, and Performance.
 - Drafted Portable Vault Mode.
 - Drafted MV2 preservation.
 - Drafted Privacy defaults (DNT, 3P cookies).
 - Drafted ungoogled-chromium style patches (Safe Browsing disabling, domain substitution).
 - Drafted initial bobium UI branding overrides.
-- Drafted initial Tab Hibernation Engine logic.
-- Implemented C++ stub for VFS DOM serialization (`TabHibernationManager`).
-- Implemented UI control hooks for setting memory caps per tab.
+- Fully sketched the Tab Hibernation Engine (VFS serialization, UI controls, and restoration hooks).
+- Completed the robust `fetch-chromium.sh` orchestration script.
 
 ## Active Focus
-The core features listed in the VISION and ROADMAP for Milestone 1-4 have been completely scaffolded via patch files. The patch integration pipeline (`apply-patches.sh`) is fully aware of all directories. We are now ready to tackle the final build environment instructions or await actual deployment onto a machine capable of pulling the 30GB repository.
+The repository is completely bootstrapped. All initial TODO items have been checked off. The patches define the core architecture. We await execution of the `fetch-chromium.sh` script on a machine with 150GB+ of storage.
