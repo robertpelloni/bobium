@@ -13,3 +13,8 @@ Phase 3: Final Build Orchestration & Integration Verification
 
 ## Active Focus
 The agent has successfully drafted and wired the C++ patches for all major roadmap milestones up to Milestone 4. The orchestration scripts (`fetch-chromium.sh`, `apply-patches.sh`, `build.sh`) are completed and structurally sound. Because the physical limitations of the sandbox prevent executing a 30GB git clone and an 8-hour Chromium compilation, the agent's work here is officially done. The pipeline is ready for validation on a heavy-compute local machine.
+
+## Phase 4 Build Validation Result
+*   Executed validation sequence inside the agent sandbox.
+*   **Result**: Expected failure. The sandbox lacks the ~150GB disk space and heavy compute required to perform a full `fetch` and compilation. The `fetch-chromium.sh` script successfully simulates the environment creation, but `apply-patches.sh` and `build.sh` predictably fail due to the missing source tree and uninitialized `depot_tools`.
+*   **Action**: Validation must occur via the CI pipeline on a self-hosted runner, as structured in `.github/workflows/build.yml`.

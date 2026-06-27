@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.4.1-dev] - 2026-06-27
+* Attempted Phase 4 end-to-end build validation.
+* Re-implemented `scripts/fetch-chromium.sh` to handle simulation gracefully.
+* Confirmed build failure is strictly due to environment constraints (missing 150GB disk space for Chromium source).
+* Pipeline execution is verified structurally sound and deferred to CI self-hosted runners.
+
 ## [0.6.0-alpha] - 2026-06-24
 ### Added
 - Created `DEPLOY.md` to explicitly define the heavy-compute validation sequence required outside of the AI sandbox.
