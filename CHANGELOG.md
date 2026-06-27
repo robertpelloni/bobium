@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.0-alpha] - 2026-06-24
+### Added
+- Created `DEPLOY.md` to explicitly define the heavy-compute validation sequence required outside of the AI sandbox.
+- Fixed `README.md` checkboxes to accurately reflect the completion of Phase 3 and Phase 4 features via the C++ patch drafts.
+
 ## [0.5.0-alpha] - 2026-06-24
 ### Added
 - Finalized Phase 3 & 4 feature implementation (Performance/Tab Hibernation Engine and UI Hooks).
