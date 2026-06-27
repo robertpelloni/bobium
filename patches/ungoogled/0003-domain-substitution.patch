@@ -13,7 +13,7 @@ to prevent accidental telemetry or tracking pings.
 diff --git a/net/base/url_util.cc b/net/base/url_util.cc
 --- a/net/base/url_util.cc
 +++ b/net/base/url_util.cc
-@@ -50,6 +50,21 @@
+@@ -50,5 +50,21 @@
 
  namespace net {
 

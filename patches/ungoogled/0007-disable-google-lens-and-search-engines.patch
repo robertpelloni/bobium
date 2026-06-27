@@ -27,7 +27,7 @@ diff --git a/chrome/browser/ui/tab_contents/core_tab_helper.cc b/chrome/browser/
 diff --git a/components/search_engines/template_url_prepopulate_data.cc b/components/search_engines/template_url_prepopulate_data.cc
 --- a/components/search_engines/template_url_prepopulate_data.cc
 +++ b/components/search_engines/template_url_prepopulate_data.cc
-@@ -200,7 +200,7 @@ const PrepopulatedEngine* const engines_default[] = {
+@@ -200,5 +200,5 @@ const PrepopulatedEngine* const engines_default[] = {
  // bobium: Replace Google with DuckDuckGo as the hardcoded fallback engine
 -    &google,
 +    &duckduckgo,

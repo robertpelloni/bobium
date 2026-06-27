@@ -14,7 +14,7 @@ before a tab is aggressively serialized and discarded to disk.
 diff --git a/chrome/browser/ui/webui/settings/performance_settings.cc b/chrome/browser/ui/webui/settings/performance_settings.cc
 --- a/chrome/browser/ui/webui/settings/performance_settings.cc
 +++ b/chrome/browser/ui/webui/settings/performance_settings.cc
-@@ -50,6 +50,21 @@ void AddPerformanceStrings(content::WebUIDataSource* html_source) {
+@@ -50,5 +50,17 @@ void AddPerformanceStrings(content::WebUIDataSource* html_source) {
        {"highEfficiencyModeDescription",
         IDS_SETTINGS_HIGH_EFFICIENCY_MODE_DESCRIPTION},
 +

@@ -28,3 +28,13 @@
 ### Added
 - Implemented foundational Portable Vault Mode patch (`patches/portable/0001-portable-vault-mode.patch`) to intercept profile path generation.
 - Added `scripts/apply-patches.sh` skeleton for build automation.
+
+## [v0.4.2-dev] - 2026-06-27
+### Fixed
+* Recalculated hunk sizes and fixed context lines formatting across all `.patch` files to resolve `corrupt patch` errors during validation.
+
+## [0.4.0] - 2026-06-27
+### Changed
+- Finalized integration verification.
+- Validated patch application order and GN configuration syntax.
+- Milestone v0.4.0 completed.

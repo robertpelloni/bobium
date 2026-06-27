@@ -14,7 +14,7 @@ in foundational branding strings to prepare for UI overhauls.
 diff --git a/chrome/app/theme/chromium/BRANDING b/chrome/app/theme/chromium/BRANDING
 --- a/chrome/app/theme/chromium/BRANDING
 +++ b/chrome/app/theme/chromium/BRANDING
-@@ -1,5 +1,5 @@
+@@ -1,6 +1,6 @@
 -COMPANY_FULLNAME=The Chromium Authors
 -COMPANY_SHORTNAME=The Chromium Authors
 -PRODUCT_FULLNAME=Chromium
@@ -30,7 +30,7 @@ diff --git a/chrome/app/theme/chromium/BRANDING b/chrome/app/theme/chromium/BRAN
 diff --git a/chrome/app/chromium_strings.grd b/chrome/app/chromium_strings.grd
 --- a/chrome/app/chromium_strings.grd
 +++ b/chrome/app/chromium_strings.grd
-@@ -100,7 +100,7 @@
+@@ -100,13 +100,13 @@
        <!-- bobium: Core string replacements -->
        <message name="IDS_PRODUCT_NAME" desc="The Chrome application name">
 -        Chromium

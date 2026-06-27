@@ -14,7 +14,7 @@ background pinging.
 diff --git a/net/base/network_change_notifier.cc b/net/base/network_change_notifier.cc
 --- a/net/base/network_change_notifier.cc
 +++ b/net/base/network_change_notifier.cc
-@@ -500,6 +500,9 @@ void NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+@@ -500,5 +500,9 @@ void NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
  // static
  void NetworkChangeNotifier::StartIPv6ReachabilityCheck() {
 +  // bobium: Prevent background pings to Google for IPv6 testing.

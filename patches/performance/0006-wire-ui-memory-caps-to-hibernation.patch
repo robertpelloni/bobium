@@ -23,7 +23,7 @@ diff --git a/chrome/browser/resource_coordinator/tab_manager.cc b/chrome/browser
 
  namespace resource_coordinator {
 
-@@ -350,6 +352,21 @@ void TabManager::OnMemoryPressure(
+@@ -350,5 +352,21 @@ void TabManager::OnMemoryPressure(
      base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level) {
    // ... existing code ...
 +

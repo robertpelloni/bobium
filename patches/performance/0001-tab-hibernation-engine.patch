@@ -15,7 +15,7 @@ solving the 500+ tab memory crash issue.
 diff --git a/chrome/browser/resource_coordinator/tab_manager.cc b/chrome/browser/resource_coordinator/tab_manager.cc
 --- a/chrome/browser/resource_coordinator/tab_manager.cc
 +++ b/chrome/browser/resource_coordinator/tab_manager.cc
-@@ -200,6 +200,21 @@ void TabManager::Start() {
+@@ -200,6 +200,20 @@ void TabManager::Start() {
 
  void TabManager::DiscardTabImpl(
      LifecycleUnit* lifecycle_unit,

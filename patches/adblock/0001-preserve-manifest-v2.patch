@@ -13,7 +13,7 @@ the Manifest V2 deprecation timeline and hardcodes them to false.
 diff --git a/extensions/common/extension_features.cc b/extensions/common/extension_features.cc
 --- a/extensions/common/extension_features.cc
 +++ b/extensions/common/extension_features.cc
-@@ -52,19 +52,19 @@
+@@ -52,16 +52,16 @@
  // Controls whether the Manifest V2 deprecation warning is shown.
  BASE_FEATURE(kMV2DeprecationWarning,
               "ExtensionManifestV2DeprecationWarning",

@@ -26,7 +26,7 @@ diff --git a/components/sync/base/command_line_switches.cc b/components/sync/bas
 diff --git a/chrome/browser/ui/webui/settings/people_handler.cc b/chrome/browser/ui/webui/settings/people_handler.cc
 --- a/chrome/browser/ui/webui/settings/people_handler.cc
 +++ b/chrome/browser/ui/webui/settings/people_handler.cc
-@@ -200,6 +200,12 @@
+@@ -200,6 +200,11 @@
  }
 
  void PeopleHandler::HandleStartSyncing(const base::Value::List& args) {
