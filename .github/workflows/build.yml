@@ -1,0 +1,34 @@
+name: bobium CI Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: self-hosted # Requires heavy-compute self-hosted runner
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Fetch Chromium
+      run: ./scripts/fetch-chromium.sh
+
+    - name: Fetch Ungoogled
+      run: ./scripts/fetch-ungoogled.sh
+
+    - name: Apply bobium Patches
+      run: ./scripts/apply-patches.sh
+
+    - name: Build bobium
+      run: ./scripts/build.sh
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: bobium-build
+        path: out/Release/chrome
