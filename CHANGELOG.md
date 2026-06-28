@@ -45,3 +45,9 @@
 - Logged all core patch infrastructure (portable vault, MV2, privacy, ungoogled, branding).
 - Logged performance tab hibernation engine logic.
 - Logged completion of `scripts/fetch-chromium.sh`, `scripts/apply-patches.sh`, and `scripts/build.sh`.
+
+## [0.4.0] - 2026-06-27 (Final Handoff)
+### Added
+- Completed Milestones 1-4.
+- Verified documentation consistency across README, VISION, ROADMAP, and MEMORY.
+- Repository is ready for heavy compute local build validation.
