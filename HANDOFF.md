@@ -1,38 +1,33 @@
-# Session Handoff & Summary
+# bobium Project Handoff
 
-**Timestamp:** 2026-06-27
-**Agent:** Google Jules
-**Version:** `0.4.0`
+**Version:** `v0.1.0`
+**Milestone:** 1 (Core Foundation Complete)
 
-## Completed Actions
-1.  **Repository Initialization & Bootstrapping:** Constructed the entire documentation ecosystem (`README.md`, `VISION.md`, `ROADMAP.md`, `TODO.md`, `CHANGELOG.md`, `MEMORY.md`, `docs/BUILD_INSTRUCTIONS.md`, `DEPLOY.md`).
-2.  **Patch Engine Architecture Defined:** Established `scripts/apply-patches.sh` to iterate through organized category directories (`patches/portable`, `patches/adblock`, `patches/privacy`, `patches/ungoogled`, `patches/branding`, `patches/performance`).
-3.  **Core Feature Patches Drafted:**
-    *   **Portable Vault Mode:** Intercepts `chrome_main_delegate.cc` to force the profile path local.
-    *   **MV2 Preservation:** Disables deprecation flags in `extension_features.cc`.
-    *   **Privacy Defaults:** Enforces DNT and third-party cookie blocking.
-    *   **Ungoogled Patches:** Disables safe browsing, domain substitutions, account sync, API keys, and telemetry.
-    *   **Hibernation Engine:** Wires `TabManager` memory caps to VFS serialization for deep tab sleeping.
-4.  **Build Orchestration:** Scripts for fetching Chromium, applying patches, and building the source via GN/Ninja are complete.
-5.  **Integration Verification:** Executed a simulated build validation. Diagnosed and repaired malformed hunk headers across all C++ `.patch` files to ensure they apply cleanly. Configured `.github/workflows/build.yml` for actual heavy-compute CI.
+## Current State
+All C++ patch files, build orchestration scripts, and project documentation are drafted and structurally validated. Due to ephemeral sandbox constraints, the actual Chromium fetch and compilation must be performed on a dedicated local machine or self-hosted CI runner.
 
-## Structural Shifts & Current Blockers
-The project relies on a 30GB+ Chromium source tree acting as a Git submodule, managed by Google's `depot_tools`. Because this is an ephemeral sandbox environment with strict memory/disk-space limits, it is **physically impossible** to execute `fetch-chromium.sh` or initiate the actual build phase within this session.
+## Prerequisites for Local Build
+To execute the pipeline, the host machine MUST meet the following requirements:
+*   **Disk Space:** 150GB+ free space (the Chromium source tree alone expands to ~30-40GB; object files require the rest).
+*   **RAM:** 32GB minimum recommended (16GB minimum with aggressive swap).
+*   **Time:** An 8+ hour compile window depending on CPU core count.
+*   **Tools:** `git`, `python3`, `curl`, and standard C++ build essentials (`build-essential`, `ninja-build` depending on OS). The `depot_tools` suite will be fetched automatically.
 
-## Next Steps for Successor Model / Human Developer
-The repository is primed and ready for local heavy-compute validation or GitHub Actions execution.
+## Pipeline Run Instructions
+1.  **Clone the Repository:**
+    `git clone <repo-url> bobium && cd bobium`
+2.  **Fetch Source:**
+    `./scripts/fetch-chromium.sh`
+3.  **Apply Patches:**
+    `./scripts/apply-patches.sh`
+    *(Ensure there are no "corrupt patch" errors or rejections)*
+4.  **Compile:**
+    `./scripts/build.sh`
 
-To build locally, ensure 150GB+ free space and 32GB+ RAM:
+## Post-Build Validation Checkpoints
+Once the binary is successfully compiled (located in `chromium/out/Release/`), launch it and manually verify the following:
 
-```bash
-# 1. Fetch the massive Chromium source tree and depot_tools
-./scripts/fetch-chromium.sh
-
-# 2. Apply all bobium feature patches
-./scripts/apply-patches.sh
-
-# 3. Compile the browser
-./scripts/build.sh
-```
-
-If the compilation succeeds, the binary will be located in `chromium/out/Release/chrome` (or `bobium.exe`).
+*   [ ] **Portable Vault Mode:** Verify that user data (profiles, caches) is being saved locally in a `vault/` folder adjacent to the binary, rather than in `~/.config/google-chrome/` or `%LOCALAPPDATA%`.
+*   [ ] **Manifest V2 (Ad Blocking):** Install an MV2 extension (e.g., uBlock Origin). Navigate to `chrome://extensions` and verify that no "deprecation warning" banners are displayed.
+*   [ ] **Tab Hibernation:** Open multiple tabs, navigate to `chrome://settings/performance`, enable the Memory Cap UI toggle, and verify tabs are aggressively discarding to free memory after the set threshold.
+*   [ ] **Privacy Defaults:** Navigate to `chrome://settings/cookies` and verify "Block third-party cookies" is the hardcoded default. Verify no Google Account sign-in prompts appear on first launch.

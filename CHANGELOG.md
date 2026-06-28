@@ -38,3 +38,10 @@
 - Finalized integration verification.
 - Validated patch application order and GN configuration syntax.
 - Milestone v0.4.0 completed.
+
+## [v0.1.0] - 2026-06-27
+### Changed
+- Explicit override: Re-versioned to v0.1.0 to formally mark Milestone 1 core foundation completion.
+- Logged all core patch infrastructure (portable vault, MV2, privacy, ungoogled, branding).
+- Logged performance tab hibernation engine logic.
+- Logged completion of `scripts/fetch-chromium.sh`, `scripts/apply-patches.sh`, and `scripts/build.sh`.
