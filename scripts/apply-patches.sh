@@ -35,8 +35,8 @@ else
         # Apply ungoogled telemetry patches
         if [ -d "$PATCH_DIR/ungoogled" ]; then
             echo "Applying ungoogled telemetry removal patches..."
-            # Sort to ensure they apply in numerical order
-            for patch in $(ls "$PATCH_DIR/ungoogled"/*.patch 2>/dev/null | sort || true); do
+            # Use safe globbing instead of ls
+            for patch in "$PATCH_DIR/ungoogled"/*.patch; do
                 if [ -f "$patch" ]; then
                     echo "Applying $patch..."
                     git -C "$CHROMIUM_SRC_DIR" apply "../../$patch"
@@ -53,7 +53,7 @@ else
         # Apply performance patches
         if [ -d "$PATCH_DIR/performance" ]; then
             echo "Applying performance and hibernation patches..."
-            for patch in $(ls "$PATCH_DIR/performance"/*.patch 2>/dev/null | sort || true); do
+            for patch in "$PATCH_DIR/performance"/*.patch; do
                 if [ -f "$patch" ]; then
                     echo "Applying $patch..."
                     git -C "$CHROMIUM_SRC_DIR" apply "../../$patch"

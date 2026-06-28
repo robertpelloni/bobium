@@ -3,8 +3,7 @@ name: bobium CI Build
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  # Removed pull_request trigger to prevent malicious RCE on self-hosted runners.
 
 jobs:
   build:
@@ -31,4 +30,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: bobium-build
-        path: out/Release/chrome
+        path: chromium/src/out/Release/chrome

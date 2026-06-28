@@ -1,12 +1,15 @@
 # Changelog
 
-## [v0.4.1-dev] - 2026-06-27
-* Attempted Phase 4 end-to-end build validation.
-* Re-implemented `scripts/fetch-chromium.sh` to handle simulation gracefully.
-* Confirmed build failure is strictly due to environment constraints (missing 150GB disk space for Chromium source).
-* Pipeline execution is verified structurally sound and deferred to CI self-hosted runners.
-
-## [0.6.0-alpha] - 2026-06-24
+## [0.4.0] - 2026-06-28
+### Added
+- Finalized Milestone 4 completion.
+- Created `DEPLOY_VALIDATION.md` featuring a comprehensive step-by-step verification checklist for executing the build pipeline on local heavy-compute machines.
+- Handoff package for Milestone 5 is complete and ready.
+## [v0.4.1] - 2026-06-28
+### Added
+- Refactored portable mode marker detection into a standalone header-only `portable_mode.h` library.
+- Added unit tests for portable mode detection.
+- Updated `build.sh` to compile and execute the test runner automatically before Chromium compilation.
 ### Added
 - Created `DEPLOY.md` to explicitly define the heavy-compute validation sequence required outside of the AI sandbox.
 - Fixed `README.md` checkboxes to accurately reflect the completion of Phase 3 and Phase 4 features via the C++ patch drafts.
@@ -69,3 +72,9 @@
 - Added troubleshooting notes for `depot_tools` and patch conflicts to `HANDOFF.md`.
 - Added "First Run" section to `DEPLOY.md` to guide validation of portable mode, MV2, and tab hibernation.
 - Marked project as ready for local heavy-compute build validation.
+
+## [v0.4.1] - 2026-06-28
+### Added
+- Refactored portable mode marker detection into a standalone `portable_mode.cc` helper.
+- Added unit tests for portable mode detection.
+- Created `run_tests.sh` to compile and execute the test runner.

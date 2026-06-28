@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Mon, 1 Jan 2026 00:00:00 +0000
+Subject: [PATCH] portable: integrate standalone portable_mode helper
+
+Integrates the bobium standalone portable mode detector into
+the Chromium profile path initialization logic.
+
+---
+ chrome/app/chrome_main_delegate.cc | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/chrome/app/chrome_main_delegate.cc b/chrome/app/chrome_main_delegate.cc
+--- a/chrome/app/chrome_main_delegate.cc
++++ b/chrome/app/chrome_main_delegate.cc
+@@ -25,6 +25,8 @@
+ #include "base/path_service.h"
+ #include "chrome/common/chrome_paths.h"
++// bobium: Include standalone portable mode helper
++#include "../../../../portable_mode.h"
+
+ namespace {
+
+@@ -150,7 +152,14 @@ void ChromeMainDelegate::PreSandboxStartup() {
+   base::FilePath user_data_dir;
+-  base::PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
++
++  // bobium: Hook portable mode logic
++  base::FilePath exe_dir;
++  base::PathService::Get(base::DIR_EXE, &exe_dir);
++  // Use AsUTF8Unsafe() to support Windows std::wstring returns
++  if (IsPortableModeEnabled(exe_dir.AsUTF8Unsafe())) {
++      user_data_dir = exe_dir.AppendASCII("vault");
++  } else {
++      base::PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
++  }
+
+   // Original initialization logic...
+--
+2.40.1

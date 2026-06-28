@@ -7,8 +7,16 @@ CHROMIUM_SRC_DIR="chromium/src"
 OUT_DIR="out/Release"
 
 echo "============================================================"
-echo " bobium: Chromium Build Orchestrator"
+echo " bobium: Chromium Build Orchestrator & Test Runner"
 echo "============================================================"
+
+echo "-> Running standalone bobium unit tests..."
+# Ensure the tests pass before trying to build chromium
+# Compile against the header-only implementation
+g++ tests/unit/portable/test_portable_mode.cc -o test_runner
+./test_runner
+rm -f test_runner
+echo "-> Tests passed."
 
 if [ ! -d "$CHROMIUM_SRC_DIR" ]; then
     echo "ERROR: Chromium source directory not found!"
