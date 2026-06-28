@@ -2,6 +2,11 @@
 
 ## [v0.1.0] - 2026-06-28
 ### Added
+- Completed Milestone 1 Core Foundation.
+- Finalized core patch infrastructure, hibernation engine stubs, and build orchestration scripts.
+- Prepared `TODO.md` and `HANDOFF.md` for heavy-compute local machine validation.
+## [v0.1.0] - 2026-06-28
+### Added
 - Explicitly marked Milestone 1 (Core Foundation completion).
 - Documented finished core patch infrastructure, build/fetch orchestration scripts, and hibernation engine drafts.
 ## [0.4.0] - 2026-06-28
