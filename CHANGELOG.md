@@ -51,3 +51,8 @@
 - Completed Milestones 1-4.
 - Verified documentation consistency across README, VISION, ROADMAP, and MEMORY.
 - Repository is ready for heavy compute local build validation.
+
+## [0.5.0] - 2026-06-27 (Phase 3 End)
+### Added
+- Logged the completion of the build orchestration and hibernation engine wiring.
+- Finalized housekeeping changes to cleanly close out the handoff for Phase 3.
