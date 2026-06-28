@@ -3,22 +3,22 @@
 
 set -e
 
-CHROMIUM_DIR="chromium"
+CHROMIUM_SRC_DIR="chromium/src"
 OUT_DIR="out/Release"
 
 echo "============================================================"
 echo " bobium: Chromium Build Orchestrator"
 echo "============================================================"
 
-if [ ! -d "$CHROMIUM_DIR" ]; then
+if [ ! -d "$CHROMIUM_SRC_DIR" ]; then
     echo "ERROR: Chromium source directory not found!"
     echo "Please run ./scripts/fetch-chromium.sh first."
 else
-    cd "$CHROMIUM_DIR"
+    cd "$CHROMIUM_SRC_DIR"
 
     # Ensure depot_tools is in PATH
-    if [ -d "../depot_tools" ]; then
-        export PATH="$PWD/../depot_tools:$PATH"
+    if [ -d "../../depot_tools" ]; then
+        export PATH="$PWD/../../depot_tools:$PATH"
     fi
 
     echo "-> Generating build files via GN..."
@@ -29,6 +29,6 @@ else
     autoninja -C "$OUT_DIR" chrome
 
     echo "============================================================"
-    echo " Build Complete! Binary is located in $CHROMIUM_DIR/$OUT_DIR"
+    echo " Build Complete! Binary is located in $CHROMIUM_SRC_DIR/$OUT_DIR"
     echo "============================================================"
 fi

@@ -56,3 +56,9 @@
 ### Added
 - Logged the completion of the build orchestration and hibernation engine wiring.
 - Finalized housekeeping changes to cleanly close out the handoff for Phase 3.
+
+## [v0.1.0] - 2026-06-28
+### Added
+- Finalized local execution handoff documentation.
+- Added explicit local build prerequisites and step-by-step validation instructions to DEPLOY.md and HANDOFF.md.
+- Marked Milestone 1 completion.

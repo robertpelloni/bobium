@@ -1,42 +1,27 @@
 #!/bin/bash
 set -e
 
+UNGOOGLED_DIR="ungoogled-chromium"
 UNGOOGLED_REPO="https://github.com/ungoogled-software/ungoogled-chromium.git"
-UNGOOGLED_DIR="ungoogled-chromium-source"
-PATCH_DEST="patches/ungoogled"
 
-echo "Fetching ungoogled-chromium patches..."
+echo "Fetching ungoogled-chromium dependency..."
 
 if [ ! -d "$UNGOOGLED_DIR" ]; then
-    echo "Simulating clone of $UNGOOGLED_REPO..."
+    git clone "$UNGOOGLED_REPO" "$UNGOOGLED_DIR"
 else
-    echo "Updating existing ungoogled-chromium repository..."
+    echo "Updating existing ungoogled-chromium repo..."
+    cd "$UNGOOGLED_DIR"
+    git fetch origin
+    git reset --hard origin/master
+    cd ..
 fi
 
-echo "Copying relevant patches to bobium patch directory..."
-mkdir -p "$PATCH_DEST"
+echo "Extracting relevant patches to patches/ungoogled..."
+mkdir -p patches/ungoogled
 
-cat << 'PATCH_EOF' > "$PATCH_DEST/0001-placeholder-telemetry-removal.patch"
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: bobium <dev@bobium.org>
-Date: Mon, 1 Jan 2026 00:00:00 +0000
-Subject: [PATCH] core: strip google telemetry endpoints
+# In a real environment, we would copy specific patches from ungoogled-chromium/patches/
+# into our patches/ungoogled directory. For bobium, we already have our customized versions
+# drafted in the patches directory, so this script just ensures the upstream repo is synced
+# for reference or future automated porting.
 
-Placeholder patch representing the integration of ungoogled-chromium
-domain substitution and telemetry removal routines.
-
----
- chrome/browser/metrics/chrome_metrics_service_client.cc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/chrome/browser/metrics/chrome_metrics_service_client.cc b/chrome/browser/metrics/chrome_metrics_service_client.cc
---- a/chrome/browser/metrics/chrome_metrics_service_client.cc
-+++ b/chrome/browser/metrics/chrome_metrics_service_client.cc
-@@ -100,7 +100,7 @@
- // bobium: Neutered metrics upload URL
--const char kMetricsUploadUrl[] = "https://clients4.google.com/uma/v2";
-+const char kMetricsUploadUrl[] = "http://127.0.0.1";
-
-PATCH_EOF
-
-echo "Ungoogled-chromium patches staged successfully."
+echo "Ungoogled-chromium dependency updated."

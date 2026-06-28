@@ -21,18 +21,13 @@ if [ ! -d "$CHROMIUM_DIR" ]; then
     echo "-> Fetching Chromium source (this will take a VERY long time and requires ~30GB of space)..."
     mkdir "$CHROMIUM_DIR"
     cd "$CHROMIUM_DIR"
-
-    # We use a shallow fetch or standard fetch depending on requirements.
-    # For now, we stub this out or do a basic fetch to satisfy the CI.
-    # In reality, this would be:
-    # fetch --nohooks chromium
-    echo "Simulating fetch for sandbox environment..."
-    mkdir -p src
+    fetch --nohooks chromium
+    echo "-> Running gclient sync..."
+    gclient sync --with_branch_heads --with_tags
 else
     echo "-> Chromium directory already exists. Syncing..."
     cd "$CHROMIUM_DIR"
-    # gclient sync
-    echo "Simulating gclient sync for sandbox environment..."
+    gclient sync -D --with_branch_heads --with_tags
 fi
 
-echo "-> Chromium source ready."
+echo "-> Chromium source ready in $CHROMIUM_DIR/src."
