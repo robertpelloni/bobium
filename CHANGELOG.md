@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v1.0.0-alpha] - 2026-06-28
+## [v0.1.0-alpha] - 2026-06-28
 ### Added
 - **Final Handoff**: Project is successfully scaffolded and ready for physical compilation on a heavy-compute local machine (Commit: `f294588`).
 
@@ -23,3 +23,10 @@ All notable changes to this project will be documented in this file.
 - **Milestone 1 (Portable Vault & Build Orchestration)**:
   - Created standalone header-only `portable_mode.h` library to intercept profile path generation (Commit: `bdb555e`).
   - Developed `scripts/fetch-chromium.sh`, `scripts/apply-patches.sh`, and `scripts/build.sh` (Commit: `f786485`).
+
+
+## [v0.1.0-alpha] - 2026-06-28 (Validation Lockdown)
+### Added
+- Final structural validation and build handoff complete.
+- Verified all shell scripts (`fetch-chromium.sh`, `apply-patches.sh`, `build.sh`) via dry-run simulation.
+- Audited all patches to confirm valid target paths and script references.
