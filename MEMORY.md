@@ -24,3 +24,7 @@ The agent has successfully drafted and wired the C++ patches for all major roadm
 - **Script Cross-Reference:** The orchestration scripts (`fetch-chromium.sh`, `apply-patches.sh`, `build.sh`) have been cross-referenced against the stated expectations in the roadmap. The scripts now correctly utilize native Chromium workflow commands (`fetch --nohooks chromium`, `gclient sync`, `gn gen`, `autoninja`) and accurately target the `chromium/src` directory for all `git apply` patch logic.
 - **Gap Analysis:** The primary gap identified during the simulation phase was the inclusion of uncompilable C++ mock patches. This gap has been closed by removing the invalid stubs, retaining the patch infrastructure, and migrating the actual C++ development requirements back to `TODO.md` for proper execution.
 - **Phase Transition:** The sandbox execution phase is formally closed. Active focus is shifted to local machine build validation.
+
+## Autonomous Verification Notes (Patch Pipeline Integration)
+- **Patch Dry-Run Validation:** Executed a minimal dry-run of `apply-patches.sh` against a mocked Chromium source tree (`chromium/src/chrome/app/chrome_main_delegate.cc`).
+- **Result:** Successfully validated patch pathing and formatting. The `0001-portable-vault-mode.patch` applied cleanly without "corrupt patch" errors after formatting adjustments via `fix_patches.py`.

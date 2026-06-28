@@ -1,5 +1,9 @@
 # Changelog
 
+## [v0.1.0] - 2026-06-28
+### Added
+- Explicitly marked Milestone 1 (Core Foundation completion).
+- Documented finished core patch infrastructure, build/fetch orchestration scripts, and hibernation engine drafts.
 ## [0.4.0] - 2026-06-28
 ### Added
 - Finalized Milestone 4 completion.

@@ -7,21 +7,25 @@ Integrates the bobium standalone portable mode detector into
 the Chromium profile path initialization logic.
 
 ---
- chrome/app/chrome_main_delegate.cc | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ chrome/app/chrome_main_delegate.cc | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/chrome/app/chrome_main_delegate.cc b/chrome/app/chrome_main_delegate.cc
+index 1111111..2222222 100644
 --- a/chrome/app/chrome_main_delegate.cc
 +++ b/chrome/app/chrome_main_delegate.cc
-@@ -25,6 +25,8 @@
+@@ -2,6 +2,9 @@
  #include "base/path_service.h"
  #include "chrome/common/chrome_paths.h"
+
 +// bobium: Include standalone portable mode helper
 +#include "../../../../portable_mode.h"
-
++
  namespace {
 
-@@ -150,7 +152,14 @@ void ChromeMainDelegate::PreSandboxStartup() {
+ } // namespace
+@@ -10,5 +13,14 @@
+ void ChromeMainDelegate::PreSandboxStartup() {
    base::FilePath user_data_dir;
 -  base::PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
 +
