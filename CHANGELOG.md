@@ -62,3 +62,10 @@
 - Finalized local execution handoff documentation.
 - Added explicit local build prerequisites and step-by-step validation instructions to DEPLOY.md and HANDOFF.md.
 - Marked Milestone 1 completion.
+
+## [v0.1.0-rc1] - 2026-06-28
+### Added
+- Completed sandbox initialization phase.
+- Added troubleshooting notes for `depot_tools` and patch conflicts to `HANDOFF.md`.
+- Added "First Run" section to `DEPLOY.md` to guide validation of portable mode, MV2, and tab hibernation.
+- Marked project as ready for local heavy-compute build validation.

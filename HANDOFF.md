@@ -31,3 +31,14 @@ Once the binary is successfully compiled (located in `chromium/out/Release/`), l
 *   [ ] **Manifest V2 (Ad Blocking):** Install an MV2 extension (e.g., uBlock Origin). Navigate to `chrome://extensions` and verify that no "deprecation warning" banners are displayed.
 *   [ ] **Tab Hibernation:** Open multiple tabs, navigate to `chrome://settings/performance`, enable the Memory Cap UI toggle, and verify tabs are aggressively discarding to free memory after the set threshold.
 *   [ ] **Privacy Defaults:** Navigate to `chrome://settings/cookies` and verify "Block third-party cookies" is the hardcoded default. Verify no Google Account sign-in prompts appear on first launch.
+
+## Troubleshooting Notes
+
+### 1. depot_tools Setup
+If `fetch-chromium.sh` fails with errors related to `python3_bin_reldir.txt not found` or `vpython3` errors, `depot_tools` may not be fully bootstrapped.
+*   **Fix:** Manually navigate to the `depot_tools` folder and run `update_depot_tools` or ensure `python3` and `curl` are installed locally before executing the fetch script.
+
+### 2. Patch Conflicts
+If `apply-patches.sh` fails due to a "corrupt patch" or "hunk rejected" error:
+*   Chromium updates very rapidly. The bobium patches were drafted against a specific snapshot.
+*   **Fix:** Navigate to `chromium/src`, reset the tree `git reset --hard HEAD && git clean -fd`, manually open the failing `.patch` file, and apply the logic by hand to the new target source files. Then, regenerate the patch file.

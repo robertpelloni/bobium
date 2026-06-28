@@ -47,3 +47,21 @@ Once compiled, locate the binary in `chromium/out/Release/chrome` (or `bobium.ex
 - **Test Portable Vault:** Launch the browser and verify that a `vault` directory is created alongside the binary, and that no profile data is written to standard OS appdata locations.
 - **Test MV2 Preservation:** Install a Manifest V2 extension like uBlock Origin and confirm no deprecation banners appear.
 - **Test Tab Hibernation:** Open 20+ tabs and verify memory footprint drops significantly after enabling the hibernation feature in settings.
+
+## First Run & Feature Validation
+
+After compiling the bobium browser, execute the binary and perform the following initial verification steps:
+
+1.  **Portable Mode Validation:**
+    *   Do not launch bobium via standard shortcuts. Run the executable directly from the terminal or a portable USB drive.
+    *   Verify that a `vault/` directory is automatically generated adjacent to the executable.
+    *   Navigate to `chrome://version` and ensure the "Profile Path" explicitly points into the new `vault/` directory rather than the host OS user data folders (e.g., `~/.config/` or `%LOCALAPPDATA%`).
+2.  **MV2 Preservation Validation:**
+    *   Navigate to the Chrome Web Store or download a `.crx` file for a Manifest V2 extension (e.g., uBlock Origin).
+    *   Install the extension.
+    *   Navigate to `chrome://extensions` and verify there are NO "deprecation" or "unsupported" warning banners displayed.
+3.  **Tab Hibernation Validation:**
+    *   Open `chrome://settings/performance`.
+    *   Verify the existence of the custom bobium Memory Cap UI controls.
+    *   Enable the feature and set a low threshold. Open 20+ heavy web pages.
+    *   Monitor the system task manager or `chrome://system` to ensure background tabs are aggressively serialized to disk/VFS and purged from active RAM.

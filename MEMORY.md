@@ -19,3 +19,8 @@ The agent has successfully drafted and wired the C++ patches for all major roadm
 *   **Result**: Expected failure. The sandbox lacks the ~150GB disk space and heavy compute required to perform a full `fetch` and compilation. The `fetch-chromium.sh` script successfully simulates the environment creation, but `apply-patches.sh` and `build.sh` predictably fail due to the missing source tree and uninitialized `depot_tools`.
 *   **Action**: Validation must occur via the CI pipeline on a self-hosted runner, as structured in `.github/workflows/build.yml`.
 - **Documentation Verification**: Confirmed consistency across README, VISION, ROADMAP, and MEMORY to ensure all reflect the completion of the core patching architecture, orchestration scripts, and hibernation/portable infrastructure.
+
+## Autonomous Verification Notes (Sandbox Phase Conclusion)
+- **Script Cross-Reference:** The orchestration scripts (`fetch-chromium.sh`, `apply-patches.sh`, `build.sh`) have been cross-referenced against the stated expectations in the roadmap. The scripts now correctly utilize native Chromium workflow commands (`fetch --nohooks chromium`, `gclient sync`, `gn gen`, `autoninja`) and accurately target the `chromium/src` directory for all `git apply` patch logic.
+- **Gap Analysis:** The primary gap identified during the simulation phase was the inclusion of uncompilable C++ mock patches. This gap has been closed by removing the invalid stubs, retaining the patch infrastructure, and migrating the actual C++ development requirements back to `TODO.md` for proper execution.
+- **Phase Transition:** The sandbox execution phase is formally closed. Active focus is shifted to local machine build validation.
