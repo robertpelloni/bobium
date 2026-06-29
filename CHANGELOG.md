@@ -1,5 +1,10 @@
-# bobium Changelog
+# Changelog
 
+## [0.4.0-rc1] - 2026-06-29
+### Added
+- Finalized user-facing build and validation guide in `docs/BUILD.md`.
+- Summarized hibernation engine and build system completion.
+- Ready for external validation on heavy-compute hardware.
 All notable changes to this project will be documented in this file.
 
 ## [v0.1.0-alpha] - 2026-06-28
