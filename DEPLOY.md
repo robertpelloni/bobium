@@ -65,3 +65,14 @@ After compiling the bobium browser, execute the binary and perform the following
     *   Verify the existence of the custom bobium Memory Cap UI controls.
     *   Enable the feature and set a low threshold. Open 20+ heavy web pages.
     *   Monitor the system task manager or `chrome://system` to ensure background tabs are aggressively serialized to disk/VFS and purged from active RAM.
+
+## Static Validation Notes
+Due to the rapid development cycle of the upstream Chromium source, patch collision is a known risk.
+When executing `apply-patches.sh`, if you encounter pathing errors targeting `chrome/app/chrome_main_delegate.cc` or `extensions/common/extension_features.cc`, it means the Chromium source tree has drifted from the snapshot these patches were originally developed against.
+
+**Resolution:**
+If `git apply` rejects a patch:
+1. Locate the target file (e.g., `chromium/src/chrome/app/chrome_main_delegate.cc`).
+2. Search the upstream source for the new function signature (e.g., `PreSandboxStartup()`).
+3. Manually integrate the custom logic (such as `#include "portable_mode.h"` and the vault hook).
+4. Run `git diff > patches/portable/0001-portable-vault-mode.patch` to regenerate the patch file against the current Chromium stable branch.
