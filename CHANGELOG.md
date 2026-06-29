@@ -1,7 +1,15 @@
-# Changelog
+# bobium Changelog
 
-## [0.4.0-rc1] - 2026-06-29
+All notable changes to this project will be documented in this file.
+
+## [v0.1.0-alpha.1] - 2026-06-29
 ### Added
+- Completed Milestone 1 core foundation work.
+- Full patch infrastructure finalized.
+- Fetch and build orchestration scripts (`fetch-chromium.sh`, `apply-patches.sh`, `build.sh`) stabilized.
+- All drafted core C++ patches for milestones 1-4 completed.
+- Finalized hibernation engine wiring.
+- Completed all handoff documentation (`HANDOFF.md`, `DEPLOY.md`, `DEPLOY_VALIDATION.md`).
 - Finalized user-facing build and validation guide in `docs/BUILD.md`.
 - Summarized hibernation engine and build system completion.
 - Ready for external validation on heavy-compute hardware.

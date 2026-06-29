@@ -56,3 +56,10 @@ If `apply-patches.sh` fails due to a "corrupt patch" or "hunk rejected" error:
 - [ ] **Smoke Test 1:** Launch the browser in portable mode and verify the vault directory generates.
 - [ ] **Smoke Test 2:** Verify Manifest V2 extensions load cleanly.
 - [ ] **Smoke Test 3:** Open 500+ tabs to verify the Hibernation Engine prevents Out Of Memory (OOM) crashes.
+
+## Critical Local Machine Validation Requirements
+To perform a complete execution and validation of the bobium pipeline, the local machine **must** meet the following hardware and software requirements. The automated scripts in this repository will fail if these are not met:
+*   **Storage:** 30GB+ of strictly free disk space (the Chromium source object files will consume this rapidly during compilation).
+*   **Memory:** 16GB+ of RAM (32GB+ is highly recommended to prevent swapping during `autoninja`).
+*   **Compute:** 8+ Core CPU.
+*   **Dependencies:** `depot_tools` must be pre-installed and available in the `$PATH` if you choose not to let `fetch-chromium.sh` clone it for you.
