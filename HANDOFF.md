@@ -42,3 +42,17 @@ If `fetch-chromium.sh` fails with errors related to `python3_bin_reldir.txt not 
 If `apply-patches.sh` fails due to a "corrupt patch" or "hunk rejected" error:
 *   Chromium updates very rapidly. The bobium patches were drafted against a specific snapshot.
 *   **Fix:** Navigate to `chromium/src`, reset the tree `git reset --hard HEAD && git clean -fd`, manually open the failing `.patch` file, and apply the logic by hand to the new target source files. Then, regenerate the patch file.
+
+## Known Risks
+* **Upstream Breakages:** Chromium moves fast. Future merges from upstream could break the C++ patch formatting (e.g., `git apply` rejects). Maintaining the patch engine requires regularly resetting the tree, hand-merging the logic, and regenerating the `.patch` files.
+* **Platform Quirks:** The `portable_mode.h` helper currently attempts to support Windows via `AsUTF8Unsafe()` string casting. This must be closely monitored across different architectures.
+
+## Execution Checklist & Smoke Tests
+- [ ] Build dependencies installed.
+- [ ] 150GB Free Disk Space confirmed.
+- [ ] `fetch-chromium.sh` completes cleanly.
+- [ ] `apply-patches.sh` completes with exactly ZERO errors (Simulated successfully).
+- [ ] `build.sh` produces `chrome` executable without linker errors.
+- [ ] **Smoke Test 1:** Launch the browser in portable mode and verify the vault directory generates.
+- [ ] **Smoke Test 2:** Verify Manifest V2 extensions load cleanly.
+- [ ] **Smoke Test 3:** Open 500+ tabs to verify the Hibernation Engine prevents Out Of Memory (OOM) crashes.
