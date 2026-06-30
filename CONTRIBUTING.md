@@ -14,7 +14,7 @@ Because Chromium is massive, you must have a heavy-compute machine to contribute
 *   **CPU:** 8+ cores.
 *   **Tools:** `depot_tools` must be installed and in your `$PATH`.
 
-Follow the `BUILD.md` and `DEPLOY.md` guides to execute `fetch-chromium.sh` and `apply-patches.sh`.
+Follow the `docs/BUILD_INSTRUCTIONS.md` guide to execute `fetch-chromium.sh` and `apply-patches.sh`.
 
 ## Submitting Pull Requests
 1.  Ensure all your custom C++ logic is contained within header-only libraries (e.g., `portable_mode.h`) or cleanly integrated into the existing patch files. Avoid modifying Chromium's `BUILD.gn` files unless absolutely necessary to prevent linker errors and build fragility.

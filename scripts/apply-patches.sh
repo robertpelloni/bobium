@@ -35,7 +35,6 @@ else
         # Apply ungoogled telemetry patches
         if [ -d "$PATCH_DIR/ungoogled" ]; then
             echo "Applying ungoogled telemetry removal patches..."
-            # Use safe globbing instead of ls
             for patch in "$PATCH_DIR/ungoogled"/*.patch; do
                 if [ -f "$patch" ]; then
                     echo "Applying $patch..."

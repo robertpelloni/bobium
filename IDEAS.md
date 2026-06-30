@@ -21,7 +21,3 @@ Bobium is "Chromium, but less evil." To move from "Less Evil" to "Universal Comp
 ## 5. Portability & Distribution
 *   **Portable "Vault" Mode:** Enhance portable mode with **AES-256 Workspace Encryption**. The entire Bobium folder (including history, passwords, and extensions) could be encrypted with a master password, making it the world's most secure "Browser on a USB Stick."
 *   **Automated "Patch Sync":** Develop a background agent that autonomously monitors `ungoogled-chromium` and `LibreWolf` repos, **Auto-Backporting privacy patches** into Bobium using Jules-Autopilot sessions, ensuring the browser is always at the cutting edge of privacy.
-## Post-Beta Refinements (Migrated from TODO.md)
-- Consider expanding the Hibernation Engine to include LZ4 compression for the serialized DOM chunk before writing to VFS, to optimize disk I/O on older HDDs.
-- Brainstorm native ad-blocking lists (similar to Brave's Rust adblocker) instead of relying solely on MV2 extensions.
-- Create automated GitHub Actions pipeline (requires custom self-hosted runners due to 30GB+ storage constraints).

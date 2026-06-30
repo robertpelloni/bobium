@@ -7,16 +7,8 @@ CHROMIUM_SRC_DIR="chromium/src"
 OUT_DIR="out/Release"
 
 echo "============================================================"
-echo " bobium: Chromium Build Orchestrator & Test Runner"
+echo " bobium: Chromium Build Orchestrator"
 echo "============================================================"
-
-echo "-> Running standalone bobium unit tests..."
-# Ensure the tests pass before trying to build chromium
-# Compile against the header-only implementation
-g++ tests/unit/portable/test_portable_mode.cc -o test_runner
-./test_runner
-rm -f test_runner
-echo "-> Tests passed."
 
 if [ ! -d "$CHROMIUM_SRC_DIR" ]; then
     echo "ERROR: Chromium source directory not found!"
@@ -30,7 +22,6 @@ else
     fi
 
     echo "-> Generating build files via GN..."
-    # We pass the args from the BUILD_INSTRUCTIONS.md to ensure privacy and optimization
     gn gen "$OUT_DIR" --args='is_debug=false dcheck_always_on=false is_component_build=false symbol_level=0 blink_symbol_level=0 enable_hangout_services_extension=false enable_mdns=false google_api_key="" google_default_client_id="" google_default_client_secret="" safe_browsing_mode=0 use_thin_lto=true'
 
     echo "-> Compiling bobium (This will take hours)..."

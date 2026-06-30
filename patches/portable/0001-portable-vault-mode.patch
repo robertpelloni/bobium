@@ -1,40 +1,42 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: bobium <dev@bobium.org>
 Date: Mon, 1 Jan 2026 00:00:00 +0000
-Subject: [PATCH] portable: integrate standalone portable_mode helper
+Subject: [PATCH] portable: implement inline portable vault mode
 
-Integrates the bobium standalone portable mode detector into
-the Chromium profile path initialization logic.
+Intercepts the Chromium profile path initialization logic and forces
+it to use a local `vault/` directory if a `.portable` marker file
+is present next to the executable.
 
 ---
- chrome/app/chrome_main_delegate.cc | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ chrome/app/chrome_main_delegate.cc | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/chrome/app/chrome_main_delegate.cc b/chrome/app/chrome_main_delegate.cc
 index 1111111..2222222 100644
 --- a/chrome/app/chrome_main_delegate.cc
 +++ b/chrome/app/chrome_main_delegate.cc
-@@ -2,6 +2,9 @@
+@@ -2,6 +2,7 @@
  #include "base/path_service.h"
  #include "chrome/common/chrome_paths.h"
++#include "base/files/file_util.h"
 
-+// bobium: Include standalone portable mode helper
-+#include "../../../../portable_mode.h"
-+
  namespace {
 
  } // namespace
-@@ -10,5 +13,14 @@
+@@ -10,6 +11,18 @@
  void ChromeMainDelegate::PreSandboxStartup() {
    base::FilePath user_data_dir;
 -  base::PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
 +
-+  // bobium: Hook portable mode logic
++  // bobium: Hook portable mode logic inline
 +  base::FilePath exe_dir;
 +  base::PathService::Get(base::DIR_EXE, &exe_dir);
-+  // Use AsUTF8Unsafe() to support Windows std::wstring returns
-+  if (IsPortableModeEnabled(exe_dir.AsUTF8Unsafe())) {
++
++  base::FilePath portable_marker = exe_dir.AppendASCII(".portable");
++  if (base::PathExists(portable_marker)) {
 +      user_data_dir = exe_dir.AppendASCII("vault");
++      // Must explicitly override the path service for the browser to recognize it
++      base::PathService::Override(chrome::DIR_USER_DATA, user_data_dir);
 +  } else {
 +      base::PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
 +  }

@@ -45,28 +45,32 @@ Chromium won the browser engine war. But Google controls it, and that's a proble
 | **Vivaldi** | Portable mode implementation, UI ideas |
 | **Edge** | What NOT to do (but maybe sleeping tabs) |
 
-## Key Features (Planned & Completed)
+## Key Features (Planned)
 
-### Portable Mode
-- [x] Portable vault mode interception (Stores profile locally)
-
-### Privacy
-- [x] All Google services stripped (using ungoogled-chromium patches)
-- [x] No telemetry
-- [x] No safe browsing phone-home (local lists only)
-- [x] No Google account integration
-- [x] Strict tracking protection
+### Privacy (Day 1)
+- [ ] All Google services stripped (using ungoogled-chromium patches)
+- [ ] No telemetry
+- [ ] No safe browsing phone-home (local lists only)
+- [ ] No Google account integration
+- [ ] Strict tracking protection
 
 ### Ad Blocking
-- [x] **Manifest V2 preserved** - webRequest API works
+- [ ] **Manifest V2 preserved** - webRequest API works
 - [ ] Built-in ad blocker (optional, Brave-style)
 - [ ] YouTube ad blocking works
-- [x] No "Manifest V2 is deprecated" warnings
+- [ ] No "Manifest V2 is deprecated" warnings
 
 ### Performance
-- [x] Tab suspension/hibernation (better than Edge)
-- [x] Memory limits per tab via UI
-- [x] Handle 500+ tabs gracefully
+- [ ] Tab suspension/hibernation (better than Edge)
+- [ ] Memory limits per tab
+- [ ] Handle 500+ tabs gracefully
+- [ ] Startup optimization
+
+### Portable Mode
+- [ ] Single folder, run from USB
+- [ ] Profile stored alongside executable
+- [ ] No registry/system modifications
+- [ ] Cross-machine portability
 
 ### UI/UX
 - [ ] Clean, minimal default
@@ -82,37 +86,89 @@ bobium/
 ├── patches/
 │   ├── privacy/         # Google service removal
 │   ├── performance/     # Tab/memory improvements
-│   ├── adblock/         # MV2 preservation
-│   ├── ungoogled/       # Telemetry patches
+│   ├── adblock/         # MV2 preservation, built-in blocking
+│   ├── ui/              # UI customizations
 │   └── branding/        # bobium branding
-├── scripts/             # Build orchestration (fetch, apply, build, package)
-└── docs/                # Documentation & handoff validation
+├── portable/            # Portable mode implementation
+├── settings/            # Default preferences
+├── scripts/             # Build automation
+└── docs/                # Documentation
 ```
 
-## Quick Start (Build & Validation)
+## Building
 
-**WARNING:** Chromium compilation is exceptionally heavy. You MUST have 150GB+ of free SSD space and 32GB+ of RAM.
+### WARNING: Chromium is HUGE
+- **Source**: ~30GB download, ~100GB with build
+- **Build time**: 2-8 hours depending on hardware
+- **RAM**: 32GB+ recommended
+- **Disk**: 150GB+ free space
+
+### Prerequisites
+- Python 3
+- Git
+- Visual Studio 2022 (Windows) / Xcode (Mac) / GCC (Linux)
+- depot_tools (Google's build tools)
+
+### Quick Start
 
 ```bash
-# 1. Clone bobium
-git clone https://github.com/robertpelloni/bobium.git
+# Clone bobium
+git clone --recursive https://github.com/robertpelloni/bobium.git
 cd bobium
 
-# 2. Fetch Chromium source and dependencies (takes HOURS)
+# Fetch Chromium source (this takes HOURS)
 ./scripts/fetch-chromium.sh
 
-# 3. Apply bobium patches
+# Apply bobium patches
 ./scripts/apply-patches.sh
 
-# 4. Build
+# Build
 ./scripts/build.sh
 
-# 5. Run
-./chromium/src/out/Release/chrome
+# Run
+./out/Release/bobium
 ```
 
-See `docs/BUILD_INSTRUCTIONS.md` and `HANDOFF.md` for a complete step-by-step local validation guide.
+## The Manifest V2 Question
+
+Google deprecated MV2 to kill ad blockers. Can we keep it?
+
+### Technical Reality
+- MV2 code still exists in Chromium (for enterprise)
+- Extensions API is in `chrome/browser/extensions/`
+- webRequest API is in `extensions/browser/api/web_request/`
+- Google added kill switches and deprecation warnings
+
+### Our Approach
+1. Remove deprecation warnings/timers
+2. Keep webRequest blocking capability
+3. Don't remove MV2 code when rebasing
+4. May need to maintain extension API ourselves long-term
+
+### Risk
+- Google may fully remove MV2 code eventually
+- We'd need to maintain a fork of the extensions system
+- Ungoogled-Chromium community may help
+
+## Related Projects
+
+- [bobzilla](../bobzilla) - Firefox fork (the other browser)
+- [raindropioapp](../raindropioapp) - Bookmark manager (integrates with bobium)
+- [bobcoin](../bobcoin) - Cryptocurrency
+- [bob's game](https://bobsgame.com) - The game
+
+## Philosophy
+
+1. **Your browser, your rules** - No corporate surveillance
+2. **Ads are a choice** - Block them if you want
+3. **Tabs are cheap** - 500 tabs shouldn't kill your PC
+4. **Portable freedom** - Take your browser anywhere
+5. **Absurdist branding** - It's called bobium, embrace the chaos
 
 ## License
 
 BSD 3-Clause (inherited from Chromium)
+
+---
+
+*"In a world of Chrome clones, be a bobium."*
