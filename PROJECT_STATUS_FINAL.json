@@ -1,0 +1,36 @@
+{
+  "project": "bobium",
+  "version": "0.1.1-alpha",
+  "ready_for_local_build": true,
+  "milestones": {
+    "milestone_1_core_foundation": {
+      "status": "completed",
+      "artifacts": ["patches/portable/0001-portable-vault-mode.patch", "portable/portable_mode.h"]
+    },
+    "milestone_2_de_googling": {
+      "status": "completed",
+      "artifacts": ["patches/privacy/0001-default-privacy-settings.patch", "settings/default_preferences.json"]
+    },
+    "milestone_3_manifest_v2": {
+      "status": "completed",
+      "artifacts": ["patches/adblock/0001-preserve-manifest-v2.patch"]
+    },
+    "milestone_4_hibernation_engine": {
+      "status": "completed",
+      "artifacts": ["patches/performance/"]
+    }
+  },
+  "generated_files": [
+    "scripts/pre_flight_check.sh",
+    "scripts/fetch-chromium.sh",
+    "scripts/fetch-ungoogled.sh",
+    "scripts/apply-patches.sh",
+    "scripts/build.sh",
+    "scripts/package_release.sh",
+    "docs/DEPLOY.md",
+    "docs/DEPLOY_VALIDATION.md",
+    "VALIDATION_SUMMARY.md",
+    "CONTRIBUTING.md",
+    "RELEASE_CHECKLIST.md"
+  ]
+}
