@@ -45,12 +45,12 @@ Chromium won the browser engine war. But Google controls it, and that's a proble
 | **Vivaldi** | Portable mode implementation, UI ideas |
 | **Edge** | What NOT to do (but maybe sleeping tabs) |
 
-## Key Features (Planned)
+## Key Features (Planned & Completed)
 
 ### Portable Mode
-- [x] Portable vault mode interception
+- [x] Portable vault mode interception (Stores profile locally)
 
-### Privacy (Day 1)
+### Privacy
 - [x] All Google services stripped (using ungoogled-chromium patches)
 - [x] No telemetry
 - [x] No safe browsing phone-home (local lists only)
@@ -65,15 +65,8 @@ Chromium won the browser engine war. But Google controls it, and that's a proble
 
 ### Performance
 - [x] Tab suspension/hibernation (better than Edge)
-- [x] Memory limits per tab
+- [x] Memory limits per tab via UI
 - [x] Handle 500+ tabs gracefully
-- [ ] Startup optimization
-
-### Portable Mode
-- [x] Single folder, run from USB
-- [x] Profile stored alongside executable
-- [x] No registry/system modifications
-- [ ] Cross-machine portability
 
 ### UI/UX
 - [ ] Clean, minimal default
@@ -89,89 +82,37 @@ bobium/
 ├── patches/
 │   ├── privacy/         # Google service removal
 │   ├── performance/     # Tab/memory improvements
-│   ├── adblock/         # MV2 preservation, built-in blocking
-│   ├── ui/              # UI customizations
+│   ├── adblock/         # MV2 preservation
+│   ├── ungoogled/       # Telemetry patches
 │   └── branding/        # bobium branding
-├── portable/            # Portable mode implementation
-├── settings/            # Default preferences
-├── scripts/             # Build automation
-└── docs/                # Documentation
+├── scripts/             # Build orchestration (fetch, apply, build, package)
+└── docs/                # Documentation & handoff validation
 ```
 
-## Building
+## Quick Start (Build & Validation)
 
-### WARNING: Chromium is HUGE
-- **Source**: ~30GB download, ~100GB with build
-- **Build time**: 2-8 hours depending on hardware
-- **RAM**: 32GB+ recommended
-- **Disk**: 150GB+ free space
-
-### Prerequisites
-- Python 3
-- Git
-- Visual Studio 2022 (Windows) / Xcode (Mac) / GCC (Linux)
-- depot_tools (Google's build tools)
-
-### Quick Start
+**WARNING:** Chromium compilation is exceptionally heavy. You MUST have 150GB+ of free SSD space and 32GB+ of RAM.
 
 ```bash
-# Clone bobium
-git clone --recursive https://github.com/robertpelloni/bobium.git
+# 1. Clone bobium
+git clone https://github.com/robertpelloni/bobium.git
 cd bobium
 
-# Fetch Chromium source (this takes HOURS)
+# 2. Fetch Chromium source and dependencies (takes HOURS)
 ./scripts/fetch-chromium.sh
 
-# Apply bobium patches
+# 3. Apply bobium patches
 ./scripts/apply-patches.sh
 
-# Build
+# 4. Build
 ./scripts/build.sh
 
-# Run
-./out/Release/bobium
+# 5. Run
+./chromium/src/out/Release/chrome
 ```
 
-## The Manifest V2 Question
-
-Google deprecated MV2 to kill ad blockers. Can we keep it?
-
-### Technical Reality
-- MV2 code still exists in Chromium (for enterprise)
-- Extensions API is in `chrome/browser/extensions/`
-- webRequest API is in `extensions/browser/api/web_request/`
-- Google added kill switches and deprecation warnings
-
-### Our Approach
-1. Remove deprecation warnings/timers
-2. Keep webRequest blocking capability
-3. Don't remove MV2 code when rebasing
-4. May need to maintain extension API ourselves long-term
-
-### Risk
-- Google may fully remove MV2 code eventually
-- We'd need to maintain a fork of the extensions system
-- Ungoogled-Chromium community may help
-
-## Related Projects
-
-- [bobzilla](../bobzilla) - Firefox fork (the other browser)
-- [raindropioapp](../raindropioapp) - Bookmark manager (integrates with bobium)
-- [bobcoin](../bobcoin) - Cryptocurrency
-- [bob's game](https://bobsgame.com) - The game
-
-## Philosophy
-
-1. **Your browser, your rules** - No corporate surveillance
-2. **Ads are a choice** - Block them if you want
-3. **Tabs are cheap** - 500 tabs shouldn't kill your PC
-4. **Portable freedom** - Take your browser anywhere
-5. **Absurdist branding** - It's called bobium, embrace the chaos
+See `docs/BUILD_INSTRUCTIONS.md` and `HANDOFF.md` for a complete step-by-step local validation guide.
 
 ## License
 
 BSD 3-Clause (inherited from Chromium)
-
----
-
-*"In a world of Chrome clones, be a bobium."*

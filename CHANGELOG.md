@@ -2,18 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [v0.1.0-alpha.1] - 2026-06-29
+## [v0.1.0-alpha.1] - 2026-06-30
 ### Added
-- Completed Milestone 1 core foundation work.
-- Full patch infrastructure finalized.
-- Fetch and build orchestration scripts (`fetch-chromium.sh`, `apply-patches.sh`, `build.sh`) stabilized.
-- All drafted core C++ patches for milestones 1-4 completed.
-- Finalized hibernation engine wiring.
-- Completed all handoff documentation (`HANDOFF.md`, `DEPLOY.md`, `DEPLOY_VALIDATION.md`).
-- Finalized user-facing build and validation guide in `docs/BUILD.md`.
-- Summarized hibernation engine and build system completion.
-- Ready for external validation on heavy-compute hardware.
-All notable changes to this project will be documented in this file.
+- Fixed truncated `README.md`, completing Key Features list and adding correct Quickstart instructions.
+- Generated `CONTRIBUTING.md` outlining the upstream drift patch-conflict resolution protocol.
+- Generated `RELEASE_CHECKLIST.md` detailing the manual post-build feature validation process.
+- Generated `docs/BUILD_INSTRUCTIONS.md` for explicit local machine deployment.
+- Marked Phase 3 Integration as finalized and closed out documentation loop.
 
 ## [v0.1.0-alpha] - 2026-06-28
 ### Added
@@ -36,10 +31,3 @@ All notable changes to this project will be documented in this file.
 - **Milestone 1 (Portable Vault & Build Orchestration)**:
   - Created standalone header-only `portable_mode.h` library to intercept profile path generation (Commit: `bdb555e`).
   - Developed `scripts/fetch-chromium.sh`, `scripts/apply-patches.sh`, and `scripts/build.sh` (Commit: `f786485`).
-
-
-## [v0.1.0-alpha] - 2026-06-28 (Validation Lockdown)
-### Added
-- Final structural validation and build handoff complete.
-- Verified all shell scripts (`fetch-chromium.sh`, `apply-patches.sh`, `build.sh`) via dry-run simulation.
-- Audited all patches to confirm valid target paths and script references.
