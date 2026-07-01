@@ -58,22 +58,22 @@ Chromium won the browser engine war. But Google controls it, and that's a proble
 - [ ] Strict tracking protection
 
 ### Ad Blocking
-- [ ] **Manifest V2 preserved** - webRequest API works
+- [x] **Manifest V2 preserved** - webRequest API works
 - [ ] Built-in ad blocker (optional, Brave-style)
 - [ ] YouTube ad blocking works
-- [ ] No "Manifest V2 is deprecated" warnings
+- [x] No "Manifest V2 is deprecated" warnings
 
 ### Performance
-- [ ] Tab suspension/hibernation (better than Edge)
-- [ ] Memory limits per tab
-- [ ] Handle 500+ tabs gracefully
+- [x] Tab suspension/hibernation (better than Edge)
+- [x] Memory limits per tab
+- [x] Handle 500+ tabs gracefully
 - [ ] Startup optimization
 
 ### Portable Mode
-- [ ] Single folder, run from USB
-- [ ] Profile stored alongside executable
-- [ ] No registry/system modifications
-- [ ] Cross-machine portability
+- [x] Single folder, run from USB
+- [x] Profile stored alongside executable
+- [x] No registry/system modifications
+- [x] Cross-machine portability
 
 ### UI/UX
 - [ ] Clean, minimal default
