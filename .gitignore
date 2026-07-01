@@ -1,0 +1,3 @@
+mock_build_output/
+tests/validation/mock_build_output/
+*.log
