@@ -1,0 +1,41 @@
+name: bobium Heavy-Compute Build Pipeline
+
+# SECURITY WARNING: Chromium builds require massive disk/RAM and arbitrary execution.
+# DO NOT run this on `pull_request` events to avoid malicious arbitrary code execution
+# on the dedicated self-hosted heavy-compute runners.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-validate:
+    runs-on: self-hosted # Must be a provisioned heavy-compute machine (>150GB disk, 32GB+ RAM)
+
+    steps:
+      - name: Checkout Orchestration Hub
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Pre-Flight Hardware Validation
+        run: ./scripts/pre_flight_check.sh
+
+      - name: Fetch Chromium Source
+        run: ./scripts/fetch-chromium.sh
+
+      - name: Fetch Ungoogled Patches
+        run: ./scripts/fetch-ungoogled.sh
+
+      - name: Apply Patch Sequence
+        run: ./scripts/apply-patches.sh
+
+      - name: Compile Chromium Binary
+        run: ./scripts/build.sh
+
+      - name: Package & Generate Checksums
+        run: ./scripts/package_release.sh
+
+      - name: Execute Autonomous Validation Suite
+        run: ./tests/validation/run_all_validations.sh
