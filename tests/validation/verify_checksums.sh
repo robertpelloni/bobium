@@ -7,18 +7,17 @@ REPO_ROOT=$(cd "$SCRIPT_DIR/../.." && pwd)
 
 echo "[+] Running Build Artifact Checksum Verification..."
 
-MOCK_BIN_DIR="$SCRIPT_DIR/mock_build_output"
-mkdir -p "$MOCK_BIN_DIR"
-echo "binary content" > "$MOCK_BIN_DIR/chrome"
+TARGET_BIN="$REPO_ROOT/chromium/out/Release/chrome"
 
-# Calculate actual hash of our mocked binary
-ACTUAL_HASH=$(sha256sum "$MOCK_BIN_DIR/chrome" | awk '{print $1}')
-
-if ! grep -q "MOCK_HASH_PLACEHOLDER" "$REPO_ROOT/VALIDATION_SUMMARY.md"; then
-    echo "MOCK_HASH_PLACEHOLDER:$ACTUAL_HASH" >> "$REPO_ROOT/VALIDATION_SUMMARY.md"
+if [ ! -f "$TARGET_BIN" ]; then
+    echo "  -> ERROR: Target binary not found at $TARGET_BIN. Ensure you have run ./scripts/build.sh on physical hardware."
+    exit 1
 fi
 
-echo "  -> Locating chromium/out/Release/chrome (Using Mock path)..."
+echo "  -> Locating $TARGET_BIN..."
+# Calculate actual hash of the compiled binary
+ACTUAL_HASH=$(sha256sum "$TARGET_BIN" | awk '{print $1}')
+
 echo "  -> Calculated SHA256: $ACTUAL_HASH"
 
 echo "  -> Asserting checksum exists in VALIDATION_SUMMARY.md..."
@@ -26,6 +25,7 @@ if grep -q "$ACTUAL_HASH" "$REPO_ROOT/VALIDATION_SUMMARY.md"; then
     echo "  -> Match verified."
 else
     echo "  -> ERROR: Checksum mismatch. The build artifact is invalid or tainted."
+    exit 1
 fi
 
 echo "[+] Checksum verification passed."
