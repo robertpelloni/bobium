@@ -115,7 +115,7 @@ Chromium compilation cannot be done in a lightweight sandbox or CI. It requires 
 
 ### Local Execution & Validation Guide
 
-The bobium architecture relies on executing a series of specific orchestration scripts to assemble and compile the browser on your heavy-compute machine.
+The bobium architecture relies on executing a series of specific orchestration scripts to assemble and compile the browser on your heavy-compute machine. **Milestones 1 through 4 are fully drafted and ready for local build validation.**
 
 ```bash
 # 1. Clone the orchestration hub
