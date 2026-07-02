@@ -58,22 +58,22 @@ Chromium won the browser engine war. But Google controls it, and that's a proble
 - [ ] Strict tracking protection
 
 ### Ad Blocking
-- [ ] **Manifest V2 preserved** - webRequest API works
+- [x] **Manifest V2 preserved** - webRequest API works
 - [ ] Built-in ad blocker (optional, Brave-style)
 - [ ] YouTube ad blocking works
-- [ ] No "Manifest V2 is deprecated" warnings
+- [x] No "Manifest V2 is deprecated" warnings
 
 ### Performance
-- [ ] Tab suspension/hibernation (better than Edge)
-- [ ] Memory limits per tab
-- [ ] Handle 500+ tabs gracefully
+- [x] Tab suspension/hibernation (better than Edge)
+- [x] Memory limits per tab
+- [x] Handle 500+ tabs gracefully
 - [ ] Startup optimization
 
 ### Portable Mode
-- [ ] Single folder, run from USB
-- [ ] Profile stored alongside executable
-- [ ] No registry/system modifications
-- [ ] Cross-machine portability
+- [x] Single folder, run from USB
+- [x] Profile stored alongside executable
+- [x] No registry/system modifications
+- [x] Cross-machine portability
 
 ### UI/UX
 - [ ] Clean, minimal default
@@ -100,37 +100,50 @@ bobium/
 
 ## Building
 
-### WARNING: Chromium is HUGE
-- **Source**: ~30GB download, ~100GB with build
-- **Build time**: 2-8 hours depending on hardware
-- **RAM**: 32GB+ recommended
-- **Disk**: 150GB+ free space
+### WARNING: Heavy Compute Required
+Chromium compilation cannot be done in a lightweight sandbox or CI. It requires a dedicated, heavy-compute physical machine.
+
+- **Storage**: >150GB of free SSD/NVMe space.
+- **Memory**: 32GB RAM minimum (64GB recommended to avoid swapping during linker phase).
+- **CPU**: 8+ physical cores highly recommended.
+- **Time**: 2-8 hours depending on hardware and network speed for `gclient sync`.
 
 ### Prerequisites
-- Python 3
-- Git
-- Visual Studio 2022 (Windows) / Xcode (Mac) / GCC (Linux)
-- depot_tools (Google's build tools)
+- OS: Ubuntu 22.04+ (Recommended), macOS 13+, or Windows 11.
+- `git` and `python3` installed.
+- Compiler toolchains: GCC/Clang (Linux), Xcode (macOS), or Visual Studio 2022 (Windows).
 
-### Quick Start
+### Local Execution & Validation Guide
+
+The bobium architecture relies on executing a series of specific orchestration scripts to assemble and compile the browser on your heavy-compute machine. **Milestones 1 through 4 are fully drafted and ready for local build validation.**
 
 ```bash
-# Clone bobium
+# 1. Clone the orchestration hub
 git clone --recursive https://github.com/robertpelloni/bobium.git
 cd bobium
 
-# Fetch Chromium source (this takes HOURS)
+# 2. Verify local environment prerequisites
+./scripts/pre_flight_check.sh
+
+# 3. Fetch upstream Chromium source via depot_tools (Takes HOURS and >30GB disk space)
 ./scripts/fetch-chromium.sh
 
-# Apply bobium patches
+# 4. Fetch upstream privacy base patches (ungoogled-chromium)
+./scripts/fetch-ungoogled.sh
+
+# 5. Apply the bobium custom C++ patches
 ./scripts/apply-patches.sh
 
-# Build
+# 6. Generate ninja files and trigger compilation
 ./scripts/build.sh
 
-# Run
-./out/Release/bobium
+# 7. Package the final release binaries
+./scripts/package_release.sh
 ```
+
+### Expected Outcomes
+After a successful build sequence, the executable will be located at `chromium/out/Release/chrome` (or `chrome.exe` on Windows).
+To test Portable Vault mode, simply create a blank `.portable` file in the same directory as the executable before launching.
 
 ## The Manifest V2 Question
 

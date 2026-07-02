@@ -23,7 +23,7 @@ else
 
     echo "-> Generating build files via GN..."
     # We pass the args from the BUILD_INSTRUCTIONS.md to ensure privacy and optimization
-    gn gen "$OUT_DIR" --args='is_debug=false dcheck_always_on=false is_component_build=false symbol_level=0 blink_symbol_level=0 enable_hangout_services_extension=false enable_mdns=false google_api_key="" google_default_client_id="" google_default_client_secret="" safe_browsing_mode=0 use_thin_lto=true'
+    gn gen "$OUT_DIR" --args='is_debug=false dcheck_always_on=false is_component_build=false symbol_level=0 blink_symbol_level=0 enable_hangout_services_extension=false enable_mdns=false google_api_key="" google_default_client_id="" google_default_client_secret="" safe_browsing_mode=0 use_thin_lto=true enable_chromium_updater=false'
 
     echo "-> Compiling bobium (This will take hours)..."
     autoninja -C "$OUT_DIR" chrome

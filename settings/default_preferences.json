@@ -1,0 +1,13 @@
+{
+  "browser": {
+    "enable_do_not_track": true,
+    "has_seen_welcome_page": true,
+    "check_default_browser": false
+  },
+  "privacy": {
+    "third_party_cookie_blocking_enabled": true
+  },
+  "search": {
+    "default_search_provider": "DuckDuckGo"
+  }
+}

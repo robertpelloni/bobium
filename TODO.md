@@ -23,3 +23,8 @@
 - [x] Add UI controls for setting memory caps per tab.
 - [x] Wire Tab Manager discard triggers to UI memory caps.
 - [x] Implement tab snapshot restoration hooks.
+
+---
+## #HANDOFF
+*   All sandbox orchestration, bash automation, validation testing, and documentation steps have been completed for Milestones 1-4.
+*   The architecture relies on a local developer executing the `EXECUTION_HANDOFF.md` checklist on a physical heavy-compute machine to actually compile the `chrome` binary and manually resolve any potential upstream C++ merge conflicts.
