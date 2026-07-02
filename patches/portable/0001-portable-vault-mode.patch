@@ -1,61 +1,46 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: bobium <dev@bobium.org>
 Date: Mon, 1 Jan 2026 00:00:00 +0000
-Subject: [PATCH] feat: implement portable vault mode interception
+Subject: [PATCH] portable: implement inline portable vault mode
 
-Intercepts the profile path generation in chrome_main_delegate.cc.
-If an adjacent '.portable' file exists next to the binary, it forces
-the UserData folder to remain local.
+Intercepts the Chromium profile path initialization logic and forces
+it to use a local `vault/` directory if a `.portable` marker file
+is present next to the executable.
 
 ---
- chrome/app/chrome_main_delegate.cc | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ chrome/app/chrome_main_delegate.cc | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/chrome/app/chrome_main_delegate.cc b/chrome/app/chrome_main_delegate.cc
+index 1111111..2222222 100644
 --- a/chrome/app/chrome_main_delegate.cc
 +++ b/chrome/app/chrome_main_delegate.cc
-@@ -101,6 +101,9 @@
- #include "chrome/browser/chrome_browser_main.h"
- #include "chrome/browser/chrome_content_browser_client.h"
-
-+// bobium: Portable Mode Include
+@@ -2,6 +2,7 @@
+ #include "base/path_service.h"
+ #include "chrome/common/chrome_paths.h"
 +#include "base/files/file_util.h"
-+
+
  namespace {
 
- #if BUILDFLAG(IS_WIN)
-@@ -482,7 +485,31 @@ void ChromeMainDelegate::PostEarlyInitialization(bool is_running_tests) {
-   }
- #endif
-
--  // Default profile path setup happens later in the browser startup sequence.
-+  // ========================================================================
-+  // bobium: Portable Vault Mode Interception
-+  // ========================================================================
-+  // Check if an adjacent '.portable' file exists. If so, override the default
-+  // user data directory to be local to the binary. This prevents polluting
-+  // the host OS registry or AppData directories.
-+  base::FilePath exe_path;
-+  if (base::PathService::Get(base::DIR_EXE, &exe_path)) {
-+    base::FilePath portable_marker = exe_path.AppendASCII(".portable");
-+    if (base::PathExists(portable_marker)) {
-+      // Force the UserData directory to be a 'UserData' folder inside the
-+      // executable's directory.
-+      base::FilePath portable_user_data_dir = exe_path.AppendASCII("UserData");
+ } // namespace
+@@ -10,6 +11,18 @@
+ void ChromeMainDelegate::PreSandboxStartup() {
+   base::FilePath user_data_dir;
+-  base::PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
 +
-+      // Ensure the directory exists
-+      if (!base::PathExists(portable_user_data_dir)) {
-+          base::CreateDirectory(portable_user_data_dir);
-+      }
++  // bobium: Hook portable mode logic inline
++  base::FilePath exe_dir;
++  base::PathService::Get(base::DIR_EXE, &exe_dir);
 +
-+      // Override the path service so all subsequent Chrome operations
-+      // use this portable directory.
-+      base::PathService::Override(chrome::DIR_USER_DATA, portable_user_data_dir);
-+    }
++  base::FilePath portable_marker = exe_dir.AppendASCII(".portable");
++  if (base::PathExists(portable_marker)) {
++      user_data_dir = exe_dir.AppendASCII("vault");
++      // Must explicitly override the path service for the browser to recognize it
++      base::PathService::Override(chrome::DIR_USER_DATA, user_data_dir);
++  } else {
++      base::PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
 +  }
-+  // ========================================================================
 
-   // Setup tracing...
- }
+   // Original initialization logic...
 --
 2.40.1

@@ -1,16 +1,9 @@
-# Vision: bobium
+# VISION: bobium
 
-**Chromium, but less evil.**
+bobium is a Chromium fork focused strictly on privacy and performance, stripping all Google integration while preserving legacy extension APIs (Manifest V2).
 
-A Chromium fork that strips Google surveillance, preserves Manifest V2 for real ad blocking, fixes Edge's tab hoarding problems, and includes Vivaldi-style portable mode.
-
-## 1. Ultimate Goal
-To create a fully functional, privacy-respecting Blink-engine alternative that works universally out-of-the-box via USB (The Vault).
-
-## 2. Core Pillars
-- **Radical Privacy:** Excision of telemetry and sync.
-- **MV2 Forever:** Preserving the webRequest API.
-- **Portability:** Everything stays local.
-
-## 3. Current Focus
-Implementing the core patch infrastructure for portability (Phase 1).
+**Core Tenets:**
+1.  **De-Googled:** Absolute removal of all Google telemetry, sync services, and API keys.
+2.  **Manifest V2 Forever:** Maintenance of the webRequest API to ensure ad blockers continue functioning unhindered.
+3.  **Portable by Default:** All user data is stored locally adjacent to the executable. No registry or AppData pollution.
+4.  **Performance:** Implementation of a strict Tab Hibernation Engine to serialize DOM states to disk, solving memory hoarding.

@@ -1,13 +1,17 @@
-# Changelog
+# bobium Changelog
 
-## [0.1.1-alpha] - 2026-06-22
-### Added
-- Created missing documentation files: `DEPLOY.md`, `DEPLOY_VALIDATION.md`, `CONTRIBUTING.md`, `RELEASE_CHECKLIST.md`.
-- Implemented `scripts/pre_flight_check.sh` and `scripts/package_release.sh`.
-- Drafted `portable/portable_mode.h` header wrapper.
-- Implemented baseline privacy preferences in `settings/default_preferences.json`.
+All notable changes to this project will be documented in this file.
 
-## [0.1.0-alpha] - 2026-06-22
+## [1.0.0-rc.1] - 2026-06-30
 ### Added
-- Implemented foundational Portable Vault Mode patch (`patches/portable/0001-portable-vault-mode.patch`) to intercept profile path generation.
-- Added `scripts/apply-patches.sh` skeleton for build automation.
+- **Milestone 5 Complete:** Finalized the build and deployment pipeline.
+- Verified orchestration scripts (`fetch-chromium.sh`, `apply-patches.sh`, `build.sh`) via `shellcheck`.
+- Generated comprehensive `DEPLOY.md` with cross-platform instructions (Linux, Windows, macOS).
+- Project is fully handed off and flagged as ready for external heavy-compute build validation.
+## [v0.1.0-alpha.1] - 2026-06-30
+### Added
+- Created `CONTRIBUTING.md` outlining the upstream drift patch-conflict resolution protocol.
+- Generated `docs/BUILD_INSTRUCTIONS.md` for explicit local machine deployment.
+- Marked Phase 3 Integration as finalized and closed out documentation loop.
+- Developed `scripts/fetch-chromium.sh`, `scripts/apply-patches.sh`, and `scripts/build.sh`.
+- Created standalone header-only `portable_mode.h` library to intercept profile path generation.
