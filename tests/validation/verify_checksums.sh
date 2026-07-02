@@ -15,13 +15,17 @@ if [ ! -f "$TARGET_BIN" ]; then
 fi
 
 echo "  -> Locating $TARGET_BIN..."
-# Calculate actual hash of the compiled binary
-ACTUAL_HASH=$(sha256sum "$TARGET_BIN" | awk '{print $1}')
+# Calculate actual hash of the compiled binary using cross-platform shasum detection
+if command -v sha256sum &> /dev/null; then
+    ACTUAL_HASH=$(sha256sum "$TARGET_BIN" | awk '{print $1}')
+else
+    ACTUAL_HASH=$(shasum -a 256 "$TARGET_BIN" | awk '{print $1}')
+fi
 
 echo "  -> Calculated SHA256: $ACTUAL_HASH"
 
-echo "  -> Asserting checksum exists in VALIDATION_SUMMARY.md..."
-if grep -q "$ACTUAL_HASH" "$REPO_ROOT/VALIDATION_SUMMARY.md"; then
+echo "  -> Asserting checksum exists in HANDOFF.md..."
+if grep -q "$ACTUAL_HASH" "$REPO_ROOT/HANDOFF.md"; then
     echo "  -> Match verified."
 else
     echo "  -> ERROR: Checksum mismatch. The build artifact is invalid or tainted."

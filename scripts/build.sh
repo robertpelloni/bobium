@@ -16,9 +16,10 @@ if [ ! -d "$CHROMIUM_DIR" ]; then
 else
     cd "$CHROMIUM_DIR"
 
-    # Ensure depot_tools is in PATH
+    # Ensure depot_tools is in PATH, exporting the absolute path
     if [ -d "../depot_tools" ]; then
-        export PATH="$PWD/../depot_tools:$PATH"
+        DEPOT_TOOLS_PATH=$(cd "../depot_tools" && pwd)
+        export PATH="$DEPOT_TOOLS_PATH:$PATH"
     fi
 
     echo "-> Generating build files via GN..."
