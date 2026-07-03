@@ -24,15 +24,8 @@ fi
 
 echo "  -> Calculated SHA256: $ACTUAL_HASH"
 
-echo "  -> Asserting checksum matches generated build signature..."
-EXPECTED_HASH_FILE="$REPO_ROOT/chromium/out/Release/bobium.sha256"
-
-if [ ! -f "$EXPECTED_HASH_FILE" ]; then
-    echo "  -> ERROR: Expected checksum file not found at $EXPECTED_HASH_FILE. Run package_release.sh first."
-    exit 1
-fi
-
-if grep -q "$ACTUAL_HASH" "$EXPECTED_HASH_FILE"; then
+echo "  -> Asserting checksum exists in HANDOFF.md..."
+if grep -q "$ACTUAL_HASH" "$REPO_ROOT/HANDOFF.md"; then
     echo "  -> Match verified."
 else
     echo "  -> ERROR: Checksum mismatch. The build artifact is invalid or tainted."

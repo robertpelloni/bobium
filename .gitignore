@@ -4,4 +4,4 @@ tests/validation/mock_build_output/
 *.tar.gz
 __pycache__/
 *.pyc
-bobium-handoff.tar.gz
+depot_tools/
