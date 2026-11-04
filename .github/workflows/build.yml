@@ -1,21 +1,39 @@
-name: bobium CI Build
+name: bobium CI Build & Validation
 
 on:
   push:
     branches: [ "main" ]
 
+# Security: Never enable pull_request trigger on self-hosted runners to prevent untrusted arbitrary execution.
+
 jobs:
-  build:
-    runs-on: self-hosted # Requires heavy-compute self-hosted runner
+  build-and-validate:
+    runs-on: self-hosted # Requires dedicated heavy-compute physical machine (>150GB SSD, 32GB+ RAM)
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-    - name: Fetch Chromium
+    - name: Pre-Flight Hardware & Dependency Check
+      run: ./scripts/pre_flight_check.sh
+
+    - name: Fetch Chromium Source
       run: ./scripts/fetch-chromium.sh
+
+    - name: Fetch Ungoogled Patches
+      run: ./scripts/fetch-ungoogled.sh
+
+    - name: Dry-Run Patch Validation
+      run: ./scripts/validate-patches-dry-run.sh
 
     - name: Apply bobium Patches
       run: ./scripts/apply-patches.sh
 
-    - name: Build bobium
+    - name: Compile bobium Release Binary
       run: ./scripts/build.sh
+
+    - name: Package Release & Generate Checksums
+      run: ./scripts/package_release.sh
+
+    - name: Run Certification Validation Suite
+      run: ./tests/validation/run_all_validations.sh
