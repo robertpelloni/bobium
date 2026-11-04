@@ -5,3 +5,6 @@ tests/validation/mock_build_output/
 __pycache__/
 *.pyc
 depot_tools/
+chromium/
+.gclient
+.gclient_entries
