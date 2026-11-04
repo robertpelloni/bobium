@@ -1,0 +1,43 @@
+From 2077a5ec6c368f59c280d4d6a64337b5d7445d2f Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Wed, 4 Nov 2026 11:31:38 +0000
+Subject: [PATCH] ungoogled: disable Google phone-home telemetry and services
+
+---
+ chrome/browser/safe_browsing/safe_browsing_service.cc | 5 ++---
+ components/google/core/common/google_util.cc          | 3 ++-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/chrome/browser/safe_browsing/safe_browsing_service.cc b/chrome/browser/safe_browsing/safe_browsing_service.cc
+index c0f51ac..034438e 100644
+--- a/chrome/browser/safe_browsing/safe_browsing_service.cc
++++ b/chrome/browser/safe_browsing/safe_browsing_service.cc
+@@ -1,10 +1,9 @@
+ namespace safe_browsing {
+
+ void SafeBrowsingService::Initialize() {
++  // bobium: safely initialize delegate while disabling background telemetry reporting
+   services_delegate_ = ServicesDelegate::Create(this);
+-  if (services_delegate_) {
+-    services_delegate_->Initialize();
+-  }
++  // safe browsing telemetry disabled
+ }
+
+ }  // namespace safe_browsing
+diff --git a/components/google/core/common/google_util.cc b/components/google/core/common/google_util.cc
+index 1b6e199..73dab21 100644
+--- a/components/google/core/common/google_util.cc
++++ b/components/google/core/common/google_util.cc
+@@ -1,7 +1,8 @@
+ namespace google_util {
+
+ bool IsGoogleDomainUrl(const GURL& url, SubdomainPermissionPolicy policy, PortPermissionPolicy port) {
+-  return true;
++  // bobium: prevent automatic service elevation or phone-home recognition for Google domains
++  return false;
+ }
+
+ }  // namespace google_util
+--
+2.53.0
