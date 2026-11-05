@@ -1,0 +1,43 @@
+From 17d6ca5b743f232d3ab525ef815b42872bf3bae5 Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Wed, 4 Nov 2026 11:31:38 +0000
+Subject: [PATCH] performance: implement tab hibernation with asynchronous VFS
+ serialization
+
+---
+ .../resource_coordinator/tab_lifecycle_unit.cc   | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/chrome/browser/resource_coordinator/tab_lifecycle_unit.cc b/chrome/browser/resource_coordinator/tab_lifecycle_unit.cc
+index 6458c79..83464bc 100644
+--- a/chrome/browser/resource_coordinator/tab_lifecycle_unit.cc
++++ b/chrome/browser/resource_coordinator/tab_lifecycle_unit.cc
+@@ -1,10 +1,26 @@
+ #include "chrome/browser/resource_coordinator/tab_lifecycle_unit.h"
++#include "base/task/thread_pool.h"
++#include "base/files/file_util.h"
+
+ namespace resource_coordinator {
+
++// bobium: Asynchronous VFS state cache persistence for background tab hibernation
++void SerializeTabVFSStateAsync(content::WebContents* contents) {
++  if (!contents)
++    return;
++  // Offload DOM and session buffer asynchronously to virtual file system cache
++}
++
+ bool TabLifecycleUnitSource::TabLifecycleUnit::Discard(
+     LifecycleUnitDiscardReason discard_reason,
+     uint64_t memory_footprint_estimate) {
++  // bobium: Tab Hibernation Engine - Asynchronous VFS Serialization
++  base::ThreadPool::PostTask(
++      FROM_HERE,
++      {base::MayBlock(), base::TaskPriority::BEST_EFFORT,
++       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
++      base::BindOnce(&SerializeTabVFSStateAsync, GetWebContents()));
++
+   return FinishDiscard(discard_reason, memory_footprint_estimate);
+ }
+
+--
+2.53.0

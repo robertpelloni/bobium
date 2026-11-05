@@ -1,0 +1,39 @@
+From e31c439dcec22de0036f20156d8fa9e0b147dc59 Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Wed, 4 Nov 2026 11:31:38 +0000
+Subject: [PATCH] privacy: set privacy-first default preferences
+
+---
+ chrome/browser/net/profile_network_context_service.cc | 2 +-
+ chrome/browser/privacy/privacy_metrics_service.cc     | 5 ++---
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/chrome/browser/net/profile_network_context_service.cc b/chrome/browser/net/profile_network_context_service.cc
+index afad80a..3f085a0 100644
+--- a/chrome/browser/net/profile_network_context_service.cc
++++ b/chrome/browser/net/profile_network_context_service.cc
+@@ -1,5 +1,5 @@
+ void ProfileNetworkContextService::RegisterProfilePrefs(PrefRegistrySimple* registry) {
+   registry->RegisterBooleanPref(
+       prefs::kEnableDoNotTrack,
+-      false);
++      true);  // bobium: Enable Do Not Track by default
+ }
+diff --git a/chrome/browser/privacy/privacy_metrics_service.cc b/chrome/browser/privacy/privacy_metrics_service.cc
+index f3251b2..fc0b322 100644
+--- a/chrome/browser/privacy/privacy_metrics_service.cc
++++ b/chrome/browser/privacy/privacy_metrics_service.cc
+@@ -1,9 +1,8 @@
+ namespace privacy {
+
+ void RecordPrivacyMetrics(Profile* profile) {
+-  if (!profile)
+-    return;
+-  SendTelemetryPing(profile);
++  // bobium: telemetry and metrics reporting disabled
++  return;
+ }
+
+ }  // namespace privacy
+--
+2.53.0

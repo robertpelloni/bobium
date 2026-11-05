@@ -2,12 +2,33 @@
   "browser": {
     "enable_do_not_track": true,
     "has_seen_welcome_page": true,
-    "check_default_browser": false
+    "check_default_browser": false,
+    "show_home_button": false,
+    "clear_data_on_exit": false
   },
   "privacy": {
-    "third_party_cookie_blocking_enabled": true
+    "third_party_cookie_blocking_enabled": true,
+    "webrtc_ip_handling_policy": "default_public_interface_only",
+    "safe_browsing_enabled": false,
+    "metrics_reporting_enabled": false
   },
   "search": {
-    "default_search_provider": "DuckDuckGo"
+    "default_search_provider": "DuckDuckGo",
+    "suggest_enabled": false
+  },
+  "performance_tuning": {
+    "high_efficiency_mode": {
+      "state": 1,
+      "time_before_discard_in_minutes": 15
+    },
+    "tab_hibernation_engine": {
+      "enabled": true,
+      "vfs_serialization": true,
+      "memory_cap_mb": 4096
+    }
+  },
+  "extensions": {
+    "manifest_v2_deprecation_disabled": true,
+    "allow_legacy_webrequest": true
   }
 }

@@ -1,0 +1,28 @@
+From db75b81404b2f82b625ec28e70c69bb4b69e9edc Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Wed, 4 Nov 2026 11:31:38 +0000
+Subject: [PATCH] branding: update browser identity to bobium
+
+---
+ chrome/app/chromium_strings.grd | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/chrome/app/chromium_strings.grd b/chrome/app/chromium_strings.grd
+index df6637d..c4d5aa3 100644
+--- a/chrome/app/chromium_strings.grd
++++ b/chrome/app/chromium_strings.grd
+@@ -1,9 +1,9 @@
+       <message name="IDS_PRODUCT_NAME" desc="The product name">
+-        Chromium
++        bobium
+       </message>
+       <message name="IDS_SHORT_PRODUCT_NAME" desc="The short product name">
+-        Chromium
++        bobium
+       </message>
+       <message name="IDS_PRODUCT_DESCRIPTION" desc="Describe the product">
+-        Chromium is a web browser.
++        bobium is a privacy-first, portable, MV2-preserving Chromium browser.
+       </message>
+--
+2.53.0

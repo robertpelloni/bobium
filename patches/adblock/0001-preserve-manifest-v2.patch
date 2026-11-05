@@ -1,0 +1,53 @@
+From 9b6755466d9431b4b3e9d353cf481d85a145d6fe Mon Sep 17 00:00:00 2001
+From: bobium <dev@bobium.org>
+Date: Wed, 4 Nov 2026 11:31:38 +0000
+Subject: [PATCH] adblock: preserve Manifest V2 extensions support
+ unconditionally
+
+---
+ .../browser/extensions/manifest_v2_experiment_manager.cc | 9 ++++-----
+ extensions/common/extension_features.cc                  | 4 ++--
+ 2 files changed, 6 insertions(+), 7 deletions(-)
+
+diff --git a/chrome/browser/extensions/manifest_v2_experiment_manager.cc b/chrome/browser/extensions/manifest_v2_experiment_manager.cc
+index 0ad1edb..d200a1d 100644
+--- a/chrome/browser/extensions/manifest_v2_experiment_manager.cc
++++ b/chrome/browser/extensions/manifest_v2_experiment_manager.cc
+@@ -1,14 +1,13 @@
+ namespace extensions {
+
+ ManifestV2ExperimentStage ManifestV2ExperimentManager::GetCurrentExperimentStage() const {
+-  if (!base::FeatureList::IsEnabled(extensions_features::kExtensionManifestV2DeprecationWarning)) {
+-    return ManifestV2ExperimentStage::kNone;
+-  }
+-  return ManifestV2ExperimentStage::kWarning;
++  // bobium: Manifest V2 is preserved permanently. Always return kNone to disable deprecation,
++  // warnings, and automatic disabling of MV2 adblock extensions.
++  return ManifestV2ExperimentStage::kNone;
+ }
+
+ bool ManifestV2ExperimentManager::IsManifestV2DeprecationWarningEnabled() const {
+-  return true;
++  return false;
+ }
+
+ }  // namespace extensions
+diff --git a/extensions/common/extension_features.cc b/extensions/common/extension_features.cc
+index af453a1..49b1cf4 100644
+--- a/extensions/common/extension_features.cc
++++ b/extensions/common/extension_features.cc
+@@ -2,10 +2,10 @@ namespace extensions_features {
+
+ BASE_FEATURE(kExtensionManifestV2DeprecationWarning,
+              "ExtensionManifestV2DeprecationWarning",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+
+ BASE_FEATURE(kExtensionManifestV2Disabled,
+              "ExtensionManifestV2Disabled",
+-             base::FEATURE_ENABLED_BY_DEFAULT);
++             base::FEATURE_DISABLED_BY_DEFAULT);
+
+ }  // namespace extensions_features
+--
+2.53.0

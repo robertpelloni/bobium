@@ -5,14 +5,21 @@
 #include <fstream>
 #include <iostream>
 
+#if defined(_WIN32)
+#include <windows.h>
+#elif defined(__APPLE__)
+#include <mach-o/dyld.h>
+#include <limits.h>
+#else
 #include <unistd.h>
 #include <limits.h>
+#endif
 
 namespace bobium {
 
 class PortableMode {
 public:
-    // Resolves the .portable flag relative to the executable, not the PWD.
+    // Resolves the .portable flag relative to the executable directory, not the working directory.
     static bool IsPortable() {
         std::string exe_path = GetExecutablePath();
         if (exe_path.empty()) return false;
@@ -28,8 +35,30 @@ public:
         return exe_path + "/bobium_profile";
     }
 
-private:
     static std::string GetExecutablePath() {
+#if defined(_WIN32)
+        char result[MAX_PATH];
+        DWORD count = GetModuleFileNameA(NULL, result, MAX_PATH);
+        if (count > 0 && count < MAX_PATH) {
+            std::string path(result, count);
+            size_t last_slash_idx = path.find_last_of("\\/");
+            if (std::string::npos != last_slash_idx) {
+                return path.substr(0, last_slash_idx);
+            }
+        }
+        return "";
+#elif defined(__APPLE__)
+        char result[PATH_MAX];
+        uint32_t size = sizeof(result);
+        if (_NSGetExecutablePath(result, &size) == 0) {
+            std::string path(result);
+            size_t last_slash_idx = path.rfind('/');
+            if (std::string::npos != last_slash_idx) {
+                return path.substr(0, last_slash_idx);
+            }
+        }
+        return "";
+#else
         char result[PATH_MAX];
         ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
         if (count != -1) {
@@ -40,6 +69,7 @@ private:
             }
         }
         return ""; // Fallback will use relative if proc/self fails
+#endif
     }
 };
 
