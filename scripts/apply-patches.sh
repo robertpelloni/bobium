@@ -1,65 +1,83 @@
 #!/bin/bash
+# apply-patches.sh - Deterministically applies bobium patch layers to chromium/src
+
 set -e
 
-PATCH_DIR="patches"
-CHROMIUM_SRC_DIR="chromium/src"
+SCRIPT_DIR=$(dirname "$0")
+REPO_ROOT=$(cd "$SCRIPT_DIR/.." && pwd)
+PATCH_DIR="$REPO_ROOT/patches"
+CHROMIUM_SRC_DIR="$REPO_ROOT/chromium/src"
 
-echo "Applying bobium patches..."
+echo "============================================================"
+echo " bobium: Chromium Patch Engine"
+echo "============================================================"
 
 if [ ! -d "$PATCH_DIR" ]; then
     echo "Error: patches directory not found!"
-    # Sandbox safe, no exit
-else
-    if [ ! -d "$CHROMIUM_SRC_DIR" ]; then
-        echo "Error: Chromium src directory ($CHROMIUM_SRC_DIR) not found. Run fetch-chromium.sh first."
-        # Sandbox safe, no exit
-    else
-        # Apply portable mode patch
-        if [ -f "$PATCH_DIR/portable/0001-portable-vault-mode.patch" ]; then
-            echo "Applying portable vault mode patch..."
-            git -C "$CHROMIUM_SRC_DIR" apply "../../$PATCH_DIR/portable/0001-portable-vault-mode.patch"
-        fi
-
-        # Apply adblock/MV2 patches
-        if [ -f "$PATCH_DIR/adblock/0001-preserve-manifest-v2.patch" ]; then
-            echo "Applying preserve manifest v2 patch..."
-            git -C "$CHROMIUM_SRC_DIR" apply "../../$PATCH_DIR/adblock/0001-preserve-manifest-v2.patch"
-        fi
-
-        # Apply privacy patches
-        if [ -f "$PATCH_DIR/privacy/0001-default-privacy-settings.patch" ]; then
-            echo "Applying default privacy settings patch..."
-            git -C "$CHROMIUM_SRC_DIR" apply "../../$PATCH_DIR/privacy/0001-default-privacy-settings.patch"
-        fi
-
-        # Apply ungoogled telemetry patches
-        if [ -d "$PATCH_DIR/ungoogled" ]; then
-            echo "Applying ungoogled telemetry removal patches..."
-            for patch in "$PATCH_DIR/ungoogled"/*.patch; do
-                if [ -f "$patch" ]; then
-                    echo "Applying $patch..."
-                    git -C "$CHROMIUM_SRC_DIR" apply "../../$patch"
-                fi
-            done
-        fi
-
-        # Apply branding patches
-        if [ -f "$PATCH_DIR/branding/0001-bobium-branding.patch" ]; then
-            echo "Applying bobium branding patch..."
-            git -C "$CHROMIUM_SRC_DIR" apply "../../$PATCH_DIR/branding/0001-bobium-branding.patch"
-        fi
-
-        # Apply performance patches
-        if [ -d "$PATCH_DIR/performance" ]; then
-            echo "Applying performance and hibernation patches..."
-            for patch in "$PATCH_DIR/performance"/*.patch; do
-                if [ -f "$patch" ]; then
-                    echo "Applying $patch..."
-                    git -C "$CHROMIUM_SRC_DIR" apply "../../$patch"
-                fi
-            done
-        fi
-
-        echo "Patches applied successfully."
-    fi
+    exit 1
 fi
+
+if [ ! -d "$CHROMIUM_SRC_DIR" ]; then
+    echo "Notice: Chromium src directory ($CHROMIUM_SRC_DIR) not found. Run fetch-chromium.sh first."
+    exit 0
+fi
+
+apply_patch() {
+    local patch_path="$1"
+    if [ -f "$patch_path" ]; then
+        echo "Applying $(basename "$patch_path")..."
+        git -C "$CHROMIUM_SRC_DIR" apply "$patch_path"
+    fi
+}
+
+# Sequence Standard: Apply ungoogled-chromium base patches FIRST to prevent context collisions
+echo "--- 1. Ungoogled Base Patches ---"
+if compgen -G "$PATCH_DIR/ungoogled/*.patch" > /dev/null; then
+    for p in $(ls "$PATCH_DIR"/ungoogled/*.patch | sort); do
+        apply_patch "$p"
+    done
+fi
+
+# Apply bobium privacy customizations
+echo "--- 2. Privacy Patches ---"
+if compgen -G "$PATCH_DIR/privacy/*.patch" > /dev/null; then
+    for p in $(ls "$PATCH_DIR"/privacy/*.patch | sort); do
+        apply_patch "$p"
+    done
+fi
+
+# Apply Manifest V2 preservation patches
+echo "--- 3. Adblock (MV2 Preservation) Patches ---"
+if compgen -G "$PATCH_DIR/adblock/*.patch" > /dev/null; then
+    for p in $(ls "$PATCH_DIR"/adblock/*.patch | sort); do
+        apply_patch "$p"
+    done
+fi
+
+# Apply Tab Hibernation Engine performance patches
+echo "--- 4. Performance & Hibernation Patches ---"
+if compgen -G "$PATCH_DIR/performance/*.patch" > /dev/null; then
+    for p in $(ls "$PATCH_DIR"/performance/*.patch | sort); do
+        apply_patch "$p"
+    done
+fi
+
+# Apply Portable Vault Mode patches
+echo "--- 5. Portable Mode Patches ---"
+if compgen -G "$PATCH_DIR/portable/*.patch" > /dev/null; then
+    for p in $(ls "$PATCH_DIR"/portable/*.patch | sort); do
+        apply_patch "$p"
+    done
+fi
+
+# Apply bobium branding patches
+echo "--- 6. Branding Patches ---"
+if compgen -G "$PATCH_DIR/branding/*.patch" > /dev/null; then
+    for p in $(ls "$PATCH_DIR"/branding/*.patch | sort); do
+        apply_patch "$p"
+    done
+fi
+
+echo "============================================================"
+echo " All bobium patches applied successfully."
+echo "============================================================"

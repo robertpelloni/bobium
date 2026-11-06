@@ -60,7 +60,8 @@ public:
         return "";
 #else
         char result[PATH_MAX];
-        ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+        // Pass sizeof(result) - 1 to guarantee buffer boundary safety for string conversion
+        ssize_t count = readlink("/proc/self/exe", result, sizeof(result) - 1);
         if (count != -1) {
             std::string path(result, count);
             size_t last_slash_idx = path.rfind('/');
