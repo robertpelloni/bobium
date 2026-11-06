@@ -5,7 +5,8 @@ set -e
 
 SCRIPT_DIR=$(dirname "$0")
 REPO_ROOT=$(cd "$SCRIPT_DIR/.." && pwd)
-TARGET_BIN="$REPO_ROOT/chromium/out/Release/chrome"
+TARGET_BIN_DIR="$REPO_ROOT/chromium/out/Release"
+TARGET_BIN="$TARGET_BIN_DIR/chrome"
 
 echo "============================================================"
 echo " bobium: Binary Packager & Checksum Generator"
@@ -28,13 +29,15 @@ else
 fi
 echo "  [OK] SHA256: $ACTUAL_HASH"
 
-# Inject the generated hash into VALIDATION_SUMMARY.md so the automated tests can assert it
-# We now inject into HANDOFF.md instead since VALIDATION_SUMMARY was consolidated.
+# Standard: Output compiled signature to checksum manifest
+echo "-> Writing signature to $TARGET_BIN_DIR/bobium.sha256..."
+echo "$ACTUAL_HASH  chrome" > "$TARGET_BIN_DIR/bobium.sha256"
+
+# Also append signature to HANDOFF.md for quick human inspection
 echo "-> Appending signature to HANDOFF.md..."
 if ! grep -q "MOCK_HASH_PLACEHOLDER" "$REPO_ROOT/HANDOFF.md"; then
     echo "MOCK_HASH_PLACEHOLDER:$ACTUAL_HASH" >> "$REPO_ROOT/HANDOFF.md"
 else
-    # If the placeholder exists, we replace it using a cross-platform sed approach
     if [ "$(uname)" = "Darwin" ]; then
         sed -i '' "s/MOCK_HASH_PLACEHOLDER.*/MOCK_HASH_PLACEHOLDER:$ACTUAL_HASH/g" "$REPO_ROOT/HANDOFF.md"
     else
